@@ -23,4 +23,6 @@ The 3D-shooter source recording includes an AAC track, but its measured audio le
 
 The manifest records the source filename and the web-copy path. The large originals are intentionally kept outside this repository.
 
-Higher-quality local encodes are generated under `../assets/videos-hd/` for previewing. They are ignored by Git because the 16-minute 720p encode is larger than GitHub's normal single-file limit. For public deployment, upload those HD files as Release assets or to a video CDN and place the hosted URL in the corresponding `hdPath` field; the browser will fall back to the repository copy when an HD source is unavailable.
+Higher-quality local encodes are generated under `../assets/videos-hd/` for previewing. The original-resolution 1080p release files are generated under `../assets/videos-1080p/` and described in `hd-1080p-manifest.json`. They are ignored by Git because several files exceed GitHub's normal single-file limit.
+
+For public deployment, upload the files from `../assets/videos-1080p/` as assets of a public GitHub Release (or to a video CDN), then put each asset's public URL in the corresponding `hdPath` field in `content.js`. The browser tries that high-resolution source first and falls back to the repository copy if it is unavailable.

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "encoding": {
+    "container": "MP4",
+    "video": "H.264 High Profile, 1920x1080 where the source is landscape; 1080x1920 for the portrait robot demo",
+    "audio": "AAC 192 kbps when an audio stream exists",
+    "quality": "CRF 18, fast-start MP4"
+  },
+  "releaseAssets": [
+    { "projectId": "3dshoot", "filename": "3dshoot-1080p.mp4", "width": 1920, "height": 1080, "bytes": 49098310 },
+    { "projectId": "science-museum", "filename": "science-museum-1080p.mp4", "width": 1920, "height": 1080, "bytes": 212709149 },
+    { "projectId": "disaster-education", "filename": "live-onward-1080p.mp4", "width": 1920, "height": 1080, "bytes": 1319845399 },
+    { "projectId": "ar-unity-model", "filename": "ar-1080p.mp4", "width": 1920, "height": 1080, "bytes": 159435013 },
+    { "projectId": "robot", "filename": "robot-1080p.mp4", "width": 1080, "height": 1920, "bytes": 70889072 },
+    { "projectId": "xppen-c4d", "filename": "xppen-c4d-1080p.mp4", "width": 1920, "height": 1080, "bytes": 7823477 }
+  ]
+}
