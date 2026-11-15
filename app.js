@@ -107,6 +107,10 @@
     const muteButton = document.createElement("button");
     muteButton.type = "button";
     muteButton.className = "video-control-button video-mute";
+    const fullscreenButton = document.createElement("button");
+    fullscreenButton.type = "button";
+    fullscreenButton.className = "video-control-button video-fullscreen";
+    fullscreenButton.textContent = "⛶";
 
     function updateControls() {
       const duration = Number.isFinite(video.duration) ? video.duration : 0;
@@ -117,6 +121,9 @@
       playButton.setAttribute("aria-label", video.paused ? (language === "zh" ? "播放" : "Play") : (language === "zh" ? "暂停" : "Pause"));
       muteButton.textContent = video.muted || video.volume === 0 ? "🔇" : "🔊";
       muteButton.setAttribute("aria-label", video.muted || video.volume === 0 ? (language === "zh" ? "取消静音" : "Unmute") : (language === "zh" ? "静音" : "Mute"));
+      const target = video.closest(".project-visual") || video;
+      const expanded = document.fullscreenElement === target || target.classList.contains("is-expanded");
+      fullscreenButton.setAttribute("aria-label", expanded ? (language === "zh" ? "退出全屏" : "Exit fullscreen") : (language === "zh" ? "放大视频" : "Fullscreen"));
     }
     playButton.addEventListener("click", () => {
       if (video.paused) video.play().catch(() => {});
@@ -138,8 +145,33 @@
       }
       updateControls();
     });
+    fullscreenButton.addEventListener("click", () => {
+      const target = video.closest(".project-visual") || video;
+      if (document.fullscreenElement) {
+        if (document.exitFullscreen) {
+          const exitResult = document.exitFullscreen();
+          if (exitResult && typeof exitResult.catch === "function") exitResult.catch(() => {});
+        }
+      } else if (target.classList.contains("is-expanded")) {
+        target.classList.remove("is-expanded");
+        updateControls();
+      } else if (typeof target.requestFullscreen === "function") {
+        const requestResult = target.requestFullscreen();
+        if (requestResult && typeof requestResult.catch === "function") requestResult.catch(() => {});
+        window.setTimeout(() => {
+          if (!document.fullscreenElement && !target.classList.contains("is-expanded")) {
+            target.classList.add("is-expanded");
+            updateControls();
+          }
+        }, 250);
+      } else {
+        target.classList.toggle("is-expanded");
+        updateControls();
+      }
+    });
     ["loadedmetadata", "durationchange", "timeupdate", "play", "pause", "ended", "volumechange"].forEach((eventName) => video.addEventListener(eventName, updateControls));
-    controls.append(playButton, progress, time, volumeLabel, volume, muteButton);
+    document.addEventListener("fullscreenchange", updateControls);
+    controls.append(playButton, progress, time, volumeLabel, volume, muteButton, fullscreenButton);
     updateControls();
     return controls;
   }
