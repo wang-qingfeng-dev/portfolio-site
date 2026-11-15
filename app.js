@@ -61,12 +61,87 @@
     }
   }
   function configureVideo(video, preload) {
-    video.controls = true;
+    video.controls = false;
     video.preload = preload;
     video.playsInline = true;
     video.muted = false;
     video.defaultMuted = false;
     video.volume = 1;
+  }
+  function formatTime(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
+    const total = Math.floor(seconds);
+    const minutes = Math.floor(total / 60).toString().padStart(2, "0");
+    const remainder = (total % 60).toString().padStart(2, "0");
+    return `${minutes}:${remainder}`;
+  }
+  function createVideoControls(video) {
+    const controls = document.createElement("div");
+    controls.className = "video-controls";
+    controls.setAttribute("aria-label", language === "zh" ? "视频控制" : "Video controls");
+    const playButton = document.createElement("button");
+    playButton.type = "button";
+    playButton.className = "video-control-button video-play";
+    const progress = document.createElement("input");
+    progress.type = "range";
+    progress.className = "video-progress";
+    progress.min = "0";
+    progress.max = "100";
+    progress.step = "0.1";
+    progress.value = "0";
+    progress.setAttribute("aria-label", language === "zh" ? "视频进度" : "Video progress");
+    const time = document.createElement("span");
+    time.className = "video-time";
+    time.textContent = "00:00 / 00:00";
+    const volumeLabel = document.createElement("span");
+    volumeLabel.className = "video-volume-label";
+    volumeLabel.textContent = language === "zh" ? "音量" : "Volume";
+    const volume = document.createElement("input");
+    volume.type = "range";
+    volume.className = "video-volume";
+    volume.min = "0";
+    volume.max = "1";
+    volume.step = "0.01";
+    volume.value = String(video.volume);
+    volume.setAttribute("aria-label", language === "zh" ? "音量大小" : "Volume level");
+    const muteButton = document.createElement("button");
+    muteButton.type = "button";
+    muteButton.className = "video-control-button video-mute";
+
+    function updateControls() {
+      const duration = Number.isFinite(video.duration) ? video.duration : 0;
+      const current = Number.isFinite(video.currentTime) ? video.currentTime : 0;
+      progress.value = duration > 0 ? String((current / duration) * 100) : "0";
+      time.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+      playButton.textContent = video.paused ? "▶" : "❚❚";
+      playButton.setAttribute("aria-label", video.paused ? (language === "zh" ? "播放" : "Play") : (language === "zh" ? "暂停" : "Pause"));
+      muteButton.textContent = video.muted || video.volume === 0 ? "🔇" : "🔊";
+      muteButton.setAttribute("aria-label", video.muted || video.volume === 0 ? (language === "zh" ? "取消静音" : "Unmute") : (language === "zh" ? "静音" : "Mute"));
+    }
+    playButton.addEventListener("click", () => {
+      if (video.paused) video.play().catch(() => {});
+      else video.pause();
+    });
+    progress.addEventListener("input", () => {
+      if (Number.isFinite(video.duration) && video.duration > 0) video.currentTime = (Number(progress.value) / 100) * video.duration;
+    });
+    volume.addEventListener("input", () => {
+      video.volume = Number(volume.value);
+      video.muted = video.volume === 0;
+      updateControls();
+    });
+    muteButton.addEventListener("click", () => {
+      video.muted = !video.muted;
+      if (!video.muted && video.volume === 0) {
+        video.volume = 0.8;
+        volume.value = "0.8";
+      }
+      updateControls();
+    });
+    ["loadedmetadata", "durationchange", "timeupdate", "play", "pause", "ended", "volumechange"].forEach((eventName) => video.addEventListener(eventName, updateControls));
+    controls.append(playButton, progress, time, volumeLabel, volume, muteButton);
+    updateControls();
+    return controls;
   }
   function renderMedia(project) {
     const media = project.media;
@@ -91,6 +166,7 @@
       fallback.alt = text(project.title);
       video.appendChild(fallback);
       visual.appendChild(video);
+      visual.appendChild(createVideoControls(video));
       if (previews.length > 1) {
         const count = document.createElement("span");
         count.className = "media-count";
@@ -222,6 +298,7 @@
             inlineVideo.poster = project.media.poster;
             addVideoSources(inlineVideo, preview);
             item.appendChild(inlineVideo);
+            item.appendChild(createVideoControls(inlineVideo));
           }
         });
         details.appendChild(previewList);

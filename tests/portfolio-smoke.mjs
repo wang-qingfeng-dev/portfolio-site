@@ -95,6 +95,10 @@ test("contact section only exposes profile links", () => {
 });
 
 test("video playback preserves audio and has a standard-source fallback", () => {
+  assert.match(app, /video\.controls = false/);
+  assert.match(app, /video-progress/);
+  assert.match(app, /video-volume/);
+  assert.match(app, /video\.currentTime/);
   assert.match(app, /video\.muted = false/);
   assert.match(app, /video\.defaultMuted = false/);
   assert.match(app, /video\.volume = 1/);
