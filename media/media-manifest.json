@@ -18,12 +18,12 @@
       "note": "Full H.264 operation demo."
     },
     {
-      "projectId": "disaster-education",
+      "projectId": "science-museum",
       "filename": "科技馆展览游玩演示.mov",
       "status": "author-demo",
       "publicPath": "assets/videos/science-museum-full.mp4",
       "duration": "03:11",
-      "note": "Full H.264 operation demo."
+      "note": "Full H.264 science-museum exhibition demo."
     },
     {
       "projectId": "ar-unity-model",
@@ -40,6 +40,13 @@
       "publicPath": "assets/videos/robot-full.mp4",
       "duration": "01:02",
       "note": "Full H.264 interactive-device demo."
+    },
+    {
+      "projectId": "xppen-c4d",
+      "filename": "XPpen.mp4",
+      "status": "author-demo",
+      "publicPath": "assets/videos/xppen-c4d-full.mp4",
+      "note": "Cinema 4D product-advertisement demo."
     }
   ]
 }
