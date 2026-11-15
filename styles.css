@@ -83,15 +83,19 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; l
 .project-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; background: linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border: 1px solid var(--line); border-radius: 1.1rem; }
 .project-card:hover { border-color: rgba(255, 184, 107, .55); transform: translateY(-2px); transition: transform .24s ease, border-color .24s ease; }
 .project-card[hidden] { display: none; }
-.project-visual { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #172029; }
+.project-visual { position: relative; container-type: inline-size; aspect-ratio: 4 / 3; overflow: hidden; background: #172029; }
 .project-visual.is-expanded { position: fixed; z-index: 50; inset: 1rem; width: auto; height: auto; aspect-ratio: auto; border: 1px solid var(--line); box-shadow: 0 1rem 4rem rgba(0,0,0,.55); }
 .project-visual.is-expanded .project-video { height: 100%; }
-.project-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.project-video { display: block; width: 100%; height: 100%; object-fit: cover; background: #172029; }
+.project-visual.is-expanded .video-controls,
+.project-visual:fullscreen .video-controls { opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+.project-visual.is-expanded.controls-visible .video-controls,
+.project-visual:fullscreen.controls-visible .video-controls { opacity: 1; pointer-events: auto; }
+.project-visual img { display: block; width: 100%; height: 100%; object-fit: contain; background: #172029; }
+.project-video { display: block; width: 100%; height: 100%; object-fit: contain; background: #172029; }
 .video-controls { position: absolute; z-index: 2; left: .55rem; right: .55rem; bottom: .55rem; display: flex; align-items: center; gap: .45rem; min-height: 2.2rem; padding: .35rem .45rem; border: 1px solid rgba(255,255,255,.16); border-radius: .65rem; background: rgba(8, 10, 13, .82); color: var(--text); backdrop-filter: blur(12px); }
 .video-control-button { display: grid; place-items: center; flex: 0 0 auto; width: 1.8rem; height: 1.8rem; padding: 0; border: 0; border-radius: .45rem; background: transparent; color: var(--text); cursor: pointer; font: inherit; }
 .video-control-button:hover, .video-control-button:focus-visible { background: rgba(255,255,255,.14); color: var(--accent); }
-.video-progress { flex: 1 1 auto; min-width: 4rem; accent-color: var(--accent); cursor: pointer; }
+.video-progress { flex: 1 1 auto; min-width: 4rem; accent-color: var(--accent); cursor: ew-resize; touch-action: none; }
 .video-time, .video-volume-label { color: var(--muted); font-size: .68rem; white-space: nowrap; }
 .video-volume { width: 4.8rem; accent-color: var(--accent); cursor: pointer; }
 .media-badge { position: absolute; left: .7rem; bottom: .7rem; max-width: calc(100% - 1.4rem); padding: .28rem .5rem; border-radius: .45rem; background: rgba(8, 10, 13, .78); color: var(--accent); font-size: .72rem; }
@@ -127,6 +131,16 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; l
 .contact-links a { color: var(--accent); text-underline-offset: .25rem; }
 .site-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1.6rem 0 2rem; color: var(--muted); font-size: .78rem; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@container (max-width: 28rem) {
+  .video-volume, .video-volume-label { display: none; }
+  .video-progress { min-width: 0; }
+}
+@media (min-width: 1100px) {
+  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .project-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 760px) {
   .site-header, main, .site-footer { width: min(var(--max), calc(100% - 1.4rem)); }
   .site-header { min-height: 4.2rem; }

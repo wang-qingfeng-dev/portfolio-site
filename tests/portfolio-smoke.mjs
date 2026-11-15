@@ -9,6 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const content = fs.readFileSync(path.join(root, "content.js"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const styles = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const context = { window: {} };
 vm.runInNewContext(content, context);
 const projects = context.window.PORTFOLIO_PROJECTS;
@@ -101,8 +102,26 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /video-fullscreen/);
   assert.match(app, /requestFullscreen/);
   assert.match(app, /video\.currentTime/);
+  assert.match(app, /pointerdown/);
+  assert.match(app, /seekToProgress/);
+  assert.match(app, /offsetX/);
+  assert.match(app, /progress\.addEventListener\("change"/);
+  assert.match(app, /progress\.addEventListener\("click"/);
+  assert.match(app, /function adjustVolume/);
+  assert.match(app, /ArrowUp/);
+  assert.match(app, /deltaY/);
+  assert.match(app, /controls-visible/);
+  assert.match(app, /2200/);
   assert.match(app, /video\.muted = false/);
   assert.match(app, /video\.defaultMuted = false/);
   assert.match(app, /video\.volume = 1/);
   assert.match(app, /fallbackTried/);
+});
+
+test("video frames stay responsive and preserve the source aspect", () => {
+  assert.match(styles, /\.project-visual\s*\{[^}]*aspect-ratio:\s*4\s*\/\s*3/s);
+  assert.match(styles, /\.project-video\s*\{[^}]*object-fit:\s*contain/s);
+  assert.match(styles, /@media\s*\(max-width:\s*900px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
+  assert.match(styles, /@media\s*\(min-width:\s*1100px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3/s);
+  assert.match(styles, /@container\s*\(max-width:\s*28rem\)[\s\S]*\.video-volume[^{]*\{[^}]*display:\s*none/s);
 });
