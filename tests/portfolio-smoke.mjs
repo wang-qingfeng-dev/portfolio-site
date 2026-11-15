@@ -105,11 +105,15 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /video-fullscreen/);
   assert.match(app, /requestFullscreen/);
   assert.match(app, /video\.currentTime/);
-  assert.match(app, /pointerdown/);
   assert.match(app, /seekToProgress/);
-  assert.match(app, /offsetX/);
+  assert.match(app, /const sources = \[preview\.path, preview\.hdPath\]/);
+  assert.match(app, /configureVideo\(video, "none"\)/);
+  assert.match(app, /createVideoControls\(video, preview\)/);
+  assert.match(app, /pendingSeekRatio/);
+  assert.doesNotMatch(app, /setProgressFromPointer/);
+  assert.doesNotMatch(app, /progress\.addEventListener\("pointerdown"/);
   assert.match(app, /progress\.addEventListener\("change"/);
-  assert.match(app, /progress\.addEventListener\("click"/);
+  assert.match(app, /progress\.addEventListener\("input"/);
   assert.match(app, /pauseOtherVideos/);
   assert.match(app, /other\.pause\(\)/);
   assert.match(app, /function adjustVolume/);

@@ -38,27 +38,34 @@
     if (media.status === "private-provenance-incomplete") return translations[language].mediaPrivate;
     return translations[language].mediaPending;
   }
+  function parseDurationLabel(value) {
+    if (Number.isFinite(value)) return Math.max(0, value);
+    if (typeof value !== "string" || !value.trim()) return 0;
+    const parts = value.split(":").map(Number);
+    if (parts.some((part) => !Number.isFinite(part) || part < 0)) return 0;
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    return 0;
+  }
   function addVideoSources(video, preview) {
-    const sources = [preview.hdPath, preview.path].filter(Boolean);
-    sources.forEach((sourcePath) => {
+    const sources = [preview.path, preview.hdPath].filter(Boolean);
+    let sourceIndex = 0;
+    const appendSource = (sourcePath) => {
       const source = document.createElement("source");
       source.src = sourcePath;
       source.type = "video/mp4";
       video.appendChild(source);
+    };
+    if (sources.length === 0) return;
+    video.addEventListener("error", () => {
+      if (sourceIndex >= sources.length - 1) return;
+      sourceIndex += 1;
+      video.dataset.fallbackTried = "true";
+      video.replaceChildren();
+      appendSource(sources[sourceIndex]);
+      video.load();
     });
-    const standardPath = preview.path;
-    if (standardPath && preview.hdPath) {
-      video.addEventListener("error", () => {
-        if (video.dataset.fallbackTried === "true") return;
-        video.dataset.fallbackTried = "true";
-        video.replaceChildren();
-        const fallbackSource = document.createElement("source");
-        fallbackSource.src = standardPath;
-        fallbackSource.type = "video/mp4";
-        video.appendChild(fallbackSource);
-        video.load();
-      });
-    }
+    sources.forEach(appendSource);
   }
   function configureVideo(video, preload) {
     video.controls = false;
@@ -75,7 +82,7 @@
     const remainder = (total % 60).toString().padStart(2, "0");
     return `${minutes}:${remainder}`;
   }
-  function createVideoControls(video) {
+  function createVideoControls(video, preview) {
     const controls = document.createElement("div");
     controls.className = "video-controls";
     controls.setAttribute("aria-label", language === "zh" ? "视频控制" : "Video controls");
@@ -92,7 +99,7 @@
     progress.setAttribute("aria-label", language === "zh" ? "视频进度" : "Video progress");
     const time = document.createElement("span");
     time.className = "video-time";
-    time.textContent = "00:00 / 00:00";
+    time.textContent = "00:00 / " + formatTime(parseDurationLabel(preview?.duration));
     const volumeLabel = document.createElement("span");
     volumeLabel.className = "video-volume-label";
     volumeLabel.textContent = language === "zh" ? "音量" : "Volume";
@@ -111,10 +118,19 @@
     fullscreenButton.type = "button";
     fullscreenButton.className = "video-control-button video-fullscreen";
     fullscreenButton.textContent = "⛶";
+    const knownDuration = parseDurationLabel(preview?.duration);
     let isScrubbing = false;
-    let nativeRangeInputSeen = false;
+    let pendingSeekRatio = null;
+    let mediaLoadStarted = false;
     let hideTimer = null;
     const target = video.closest(".project-visual") || video;
+
+    function ensureMediaLoaded() {
+      if (mediaLoadStarted) return;
+      mediaLoadStarted = true;
+      video.preload = "auto";
+      if (video.readyState === 0) video.load();
+    }
 
     function showTransientControls() {
       if (!target.classList.contains("is-expanded") && document.fullscreenElement !== target) return;
@@ -123,10 +139,15 @@
       hideTimer = window.setTimeout(() => target.classList.remove("controls-visible"), 2200);
     }
 
+    function getDuration() {
+      return Number.isFinite(video.duration) && video.duration > 0 ? video.duration : knownDuration;
+    }
+
     function updateControls() {
-      const duration = Number.isFinite(video.duration) ? video.duration : 0;
+      const duration = getDuration();
       const current = Number.isFinite(video.currentTime) ? video.currentTime : 0;
       if (!isScrubbing) progress.value = duration > 0 ? String((current / duration) * 100) : "0";
+      progress.disabled = duration <= 0;
       time.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
       playButton.textContent = video.paused ? "▶" : "❚❚";
       playButton.setAttribute("aria-label", video.paused ? (language === "zh" ? "播放" : "Play") : (language === "zh" ? "暂停" : "Pause"));
@@ -147,14 +168,21 @@
     }
     playButton.addEventListener("click", () => {
       if (video.paused) {
+        ensureMediaLoaded();
         pauseOtherVideos();
         video.play().catch(() => {});
       } else video.pause();
     });
     function seekToProgress() {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
       const percentage = Math.max(0, Math.min(100, Number(progress.value) || 0));
-      video.currentTime = (percentage / 100) * video.duration;
+      const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 0;
+      if (duration <= 0) {
+        pendingSeekRatio = percentage / 100;
+        ensureMediaLoaded();
+        return;
+      }
+      pendingSeekRatio = null;
+      video.currentTime = (percentage / 100) * duration;
     }
     function adjustVolume(delta) {
       const current = video.muted ? 0 : video.volume;
@@ -164,48 +192,21 @@
       volume.value = String(next);
       updateControls();
     }
-    function setProgressFromPointer(event) {
-      const rect = progress.getBoundingClientRect();
-      if (!Number.isFinite(video.duration) || video.duration <= 0 || rect.width <= 0) return;
-      const offsetX = Number(event.offsetX);
-      const pointerOffset = event.clientX - rect.left;
-      const localX = (event.type === "pointerdown" || event.type === "click") && Number.isFinite(offsetX) && offsetX >= 0 && offsetX <= rect.width
-        ? offsetX
-        : pointerOffset;
-      const ratio = Math.max(0, Math.min(1, localX / rect.width));
-      progress.value = String(ratio * 100);
-      seekToProgress();
-    }
     progress.addEventListener("input", () => {
-      nativeRangeInputSeen = true;
+      isScrubbing = true;
       seekToProgress();
+      updateControls();
     });
     progress.addEventListener("change", () => {
       seekToProgress();
       isScrubbing = false;
       updateControls();
     });
-    progress.addEventListener("pointerdown", (event) => {
-      isScrubbing = true;
-      nativeRangeInputSeen = false;
-      progress.setPointerCapture?.(event.pointerId);
-    });
-    progress.addEventListener("pointermove", (event) => {
-      if (isScrubbing && !nativeRangeInputSeen) setProgressFromPointer(event);
-    });
-    progress.addEventListener("pointerup", (event) => {
-      isScrubbing = false;
-      progress.releasePointerCapture?.(event.pointerId);
-      window.setTimeout(() => {
-        seekToProgress();
-        updateControls();
-      }, 0);
-    });
-    progress.addEventListener("pointercancel", () => { isScrubbing = false; updateControls(); });
-    progress.addEventListener("click", (event) => {
-      if (!nativeRangeInputSeen) setProgressFromPointer(event);
+    progress.addEventListener("blur", () => {
+      if (!isScrubbing) return;
       seekToProgress();
-      window.setTimeout(updateControls, 0);
+      isScrubbing = false;
+      updateControls();
     });
     volume.addEventListener("input", () => {
       video.volume = Number(volume.value);
@@ -259,8 +260,15 @@
         updateControls();
       }
     });
+    video.addEventListener("loadedmetadata", () => {
+      if (pendingSeekRatio !== null && Number.isFinite(video.duration) && video.duration > 0) {
+        video.currentTime = pendingSeekRatio * video.duration;
+        pendingSeekRatio = null;
+      }
+      updateControls();
+    });
     video.addEventListener("play", pauseOtherVideos);
-    ["loadedmetadata", "durationchange", "timeupdate", "play", "pause", "ended", "volumechange"].forEach((eventName) => video.addEventListener(eventName, updateControls));
+    ["durationchange", "timeupdate", "play", "pause", "ended", "volumechange"].forEach((eventName) => video.addEventListener(eventName, updateControls));
     target.addEventListener("pointermove", showTransientControls);
     target.addEventListener("focusin", showTransientControls);
     document.addEventListener("fullscreenchange", () => {
@@ -286,7 +294,7 @@
     } else {
       const video = document.createElement("video");
       video.className = "project-video";
-      configureVideo(video, "metadata");
+      configureVideo(video, "none");
       video.poster = media.poster;
       video.setAttribute("aria-label", `${text(project.title)} demo preview`);
       addVideoSources(video, previews[0]);
@@ -295,7 +303,7 @@
       fallback.alt = text(project.title);
       video.appendChild(fallback);
       visual.appendChild(video);
-      visual.appendChild(createVideoControls(video));
+      visual.appendChild(createVideoControls(video, previews[0]));
       if (previews.length > 1) {
         const count = document.createElement("span");
         count.className = "media-count";
