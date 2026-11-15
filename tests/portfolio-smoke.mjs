@@ -214,6 +214,47 @@ test("video frames stay responsive and preserve the source aspect", () => {
   assert.match(styles, /\.video-quality option[^\{]*\{[^\}]*background:\s*var\(--surface-raised\)/s);
 });
 
+test("iOS video expansion uses an isolated, scroll-safe path", () => {
+  assert.match(app, /setAttribute\("playsinline"/);
+  assert.match(app, /setAttribute\("webkit-playsinline"/);
+  assert.doesNotMatch(app, /webkitEnterFullscreen/);
+  assert.match(app, /isIOSDevice\(\)/);
+  assert.match(app, /isIOSDevice\(\)[\s\S]{0,260}enterExpandedVideo\(target\)/);
+  assert.match(app, /video-modal-open/);
+  assert.match(app, /scrollY/);
+  assert.match(styles, /body\.video-modal-open/);
+  assert.match(styles, /100dvh/);
+  assert.match(styles, /safe-area-inset/);
+});
+
+test("iOS cards recover their poster and decoder after Safari suspends media", () => {
+  assert.match(app, /video-poster/);
+  assert.match(app, /IntersectionObserver/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pageshow/);
+});
+
+test("page chrome uses the portfolio identity", () => {
+  assert.match(html, /<title>王青锋 · 交互系统作品集<\/title>/);
+  assert.match(html, /assets\/favicon\.svg/);
+  assert.match(app, /pageTitle/);
+  assert.match(html, /class="signal-core">QW<\/span>/);
+  assert.doesNotMatch(html, /class="signal-core">01<\/span>/);
+});
+
+test("quality changes prepare a second video before switching", () => {
+  assert.match(app, /createQualityBuffer/);
+  assert.match(app, /canplay/);
+  assert.match(app, /__qualityBuffer/);
+  assert.match(app, /__activeVideo/);
+  assert.match(app, /__qualityLoadToken/);
+  assert.match(app, /currentTime/);
+  assert.match(app, /seeked/);
+  assert.match(app, /pendingQualityBuffer/);
+  assert.match(app, /buffer\.remove\(\)/);
+  assert.match(app, /if \(token !== video\.__qualityLoadToken \|\| !buffer\.isConnected\)/);
+});
+
 test("project years reflect the supplied portfolio timeline", () => {
   assert.equal(projects.find((project) => project.id === "science-museum")?.year, "2024");
   assert.equal(projects.find((project) => project.id === "blender-keycap")?.year, "2024");
