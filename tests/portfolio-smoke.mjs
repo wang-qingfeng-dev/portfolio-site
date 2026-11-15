@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const content = fs.readFileSync(path.join(root, "content.js"), "utf8");
+const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
 const context = { window: {} };
 vm.runInNewContext(content, context);
 const projects = context.window.PORTFOLIO_PROJECTS;
@@ -42,4 +43,17 @@ test("media previews stay inside the repository", () => {
 
 test("public content has no local Windows paths or credentials", () => {
   assert.doesNotMatch(html + content, /[A-Z]:\\\\|password|api[_-]?key|token/i);
+});
+
+test("contact section only exposes profile links", () => {
+  assert.doesNotMatch(html + app, /欢迎交流|Open to Unity internships|加拿大计算机硕士申请/);
+  assert.match(html, /github\.com\/wang-qingfeng-dev/);
+  assert.match(html, /id=["']contactEmail["']/);
+});
+
+test("video playback preserves audio and has a standard-source fallback", () => {
+  assert.match(app, /video\.muted = false/);
+  assert.match(app, /video\.defaultMuted = false/);
+  assert.match(app, /video\.volume = 1/);
+  assert.match(app, /fallbackTried/);
 });

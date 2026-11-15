@@ -10,7 +10,7 @@
       workNote: "先看 Unity 项目，再看系统与研究项目。", filterAll: "全部", filterSystems: "系统", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
       aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、AR、机器人系统集成和软件工程。",
       factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI",
-      contactEyebrow: "CONTACT", contactTitle: "一起把想法做出来。", contactText: "欢迎交流 Unity 实习、交互媒体项目和加拿大计算机硕士申请相关合作。",
+      contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式",
       footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频",
       details: "查看项目说明", contribution: "个人贡献", openLink: "打开链接"
     },
@@ -21,7 +21,7 @@
       workNote: "Unity projects first, followed by systems and research work.", filterAll: "All", filterSystems: "Systems", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
       aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, AR, robot systems integration, and software engineering.",
       factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI",
-      contactEyebrow: "CONTACT", contactTitle: "Let’s make the idea runnable.", contactText: "Open to Unity internships, interactive-media projects, and conversations related to Canadian computer-science applications.",
+      contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact",
       footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video",
       details: "View project notes", contribution: "Personal contribution", openLink: "Open link"
     }
@@ -46,6 +46,27 @@
       source.type = "video/mp4";
       video.appendChild(source);
     });
+    const standardPath = preview.path;
+    if (standardPath && preview.hdPath) {
+      video.addEventListener("error", () => {
+        if (video.dataset.fallbackTried === "true") return;
+        video.dataset.fallbackTried = "true";
+        video.replaceChildren();
+        const fallbackSource = document.createElement("source");
+        fallbackSource.src = standardPath;
+        fallbackSource.type = "video/mp4";
+        video.appendChild(fallbackSource);
+        video.load();
+      });
+    }
+  }
+  function configureVideo(video, preload) {
+    video.controls = true;
+    video.preload = preload;
+    video.playsInline = true;
+    video.muted = false;
+    video.defaultMuted = false;
+    video.volume = 1;
   }
   function renderMedia(project) {
     const media = project.media;
@@ -61,9 +82,7 @@
     } else {
       const video = document.createElement("video");
       video.className = "project-video";
-      video.controls = true;
-      video.preload = "metadata";
-      video.playsInline = true;
+      configureVideo(video, "metadata");
       video.poster = media.poster;
       video.setAttribute("aria-label", `${text(project.title)} demo preview`);
       addVideoSources(video, previews[0]);
@@ -139,9 +158,7 @@
           if (project.media.previews.length > 1 && preview !== project.media.previews[0]) {
             const inlineVideo = document.createElement("video");
             inlineVideo.className = "inline-preview-video";
-            inlineVideo.controls = true;
-            inlineVideo.preload = "none";
-            inlineVideo.playsInline = true;
+            configureVideo(inlineVideo, "none");
             inlineVideo.poster = project.media.poster;
             addVideoSources(inlineVideo, preview);
             item.appendChild(inlineVideo);

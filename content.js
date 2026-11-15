@@ -8,7 +8,7 @@ window.PORTFOLIO_PROJECTS = [
     summary: { zh: "用 Unity 搭建可玩的第三人称战斗循环：移动、瞄准、射击和敌人追击。", en: "A playable third-person combat loop built in Unity: movement, aiming, shooting, and enemy pursuit." },
     role: { zh: "个人开发：玩法脚本、敌人逻辑、武器和运行调试。", en: "Personal work: gameplay scripts, enemy logic, weapons, and runtime debugging." },
     tech: ["Unity", "C#", "NavMesh", "Raycast"],
-    media: { status: "author-demo", poster: "assets/posters/3dshoot.jpg", previews: [{ path: "assets/videos/3dshoot-full.mp4", hdPath: "assets/videos-hd/3dshoot-hd.mp4", label: { zh: "完整射击循环演示", en: "Full combat loop demo" }, duration: "01:12" }], note: { zh: "完整操作演示：移动、瞄准、射击与敌人追击。", en: "Full operation demo: movement, aiming, shooting, and enemy pursuit." } },
+    media: { status: "author-demo", poster: "assets/posters/3dshoot.jpg", previews: [{ path: "assets/videos/3dshoot-full.mp4", hdPath: "assets/videos-hd/3dshoot-hd.mp4", label: { zh: "完整射击循环演示", en: "Full combat loop demo" }, duration: "01:12" }], note: { zh: "完整操作演示：移动、瞄准、射击与敌人追击。原始录制没有有效音轨，因此此视频无声音。", en: "Full operation demo: movement, aiming, shooting, and enemy pursuit. The original recording contains no usable audio track, so this video is silent." } },
     links: []
   },
   {
