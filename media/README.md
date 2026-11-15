@@ -14,8 +14,10 @@ Video files:
 - `../assets/videos/ar-full.mp4`
 - `../assets/videos/robot-full.mp4`
 - `../assets/videos/touchdesigner-2025-full.mp4`
+- `../assets/videos/xppen-c4d-full.mp4`
 
 Exhibition evidence supplied by the portfolio owner is stored under `../assets/exhibitions/`. The 2025 images document the TouchDesigner installation; the 2026 images document the Xiaozhi robot exhibition and its project board.
+Blender render evidence is stored under `../assets/renders/` and is used for the environment-modeling and keycap-modeling projects.
 
 The 3D-shooter source recording includes an AAC track, but its measured audio level is digital silence. The site keeps the original recording unchanged and labels that demo as silent; adding replacement music would change the evidence and is intentionally not done.
 

@@ -4,26 +4,26 @@
   const projects = Array.isArray(window.PORTFOLIO_PROJECTS) ? window.PORTFOLIO_PROJECTS : [];
   const translations = {
     zh: {
-      brandName: "王青锋", footerCredit: "© 2026 王青锋", schoolName: "重庆对外经贸学院", navWork: "作品", navAbout: "关于我", navContact: "联系", eyebrow: "UNITY · AR · INTERACTION",
+      brandName: "王青锋", footerCredit: "© 2026 王青锋", schoolName: "重庆对外经贸学院", navWork: "作品", navAbout: "关于我", navContact: "联系", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "把交互想法做成可运行的世界。", heroLede: "数字媒体技术本科生，专注 Unity 游戏玩法、AR 体验和可验证的交互系统。预计 2027 年 6 月毕业。",
       viewWork: "查看作品", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "从玩法到真实场景",
-      workNote: "先看 Unity 项目，再看系统与研究项目。", filterAll: "全部", filterSystems: "系统", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
-      aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、AR、机器人系统集成和软件工程。",
+      workNote: "按 Unity、AR、工程、交互装置和建模动画方向浏览。", filterAll: "全部", filterUnity: "Unity 作品", filterAR: "AR 交互", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
+      aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、TouchDesigner 实时装置、C4D/Blender 三维制作、机器人系统集成和计算机视觉研究。",
       factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI",
       contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式",
       footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频", exhibitionTitle: "展览记录",
-      details: "查看项目说明", contribution: "个人贡献", openLink: "打开链接"
+      details: "查看项目说明", contribution: "完成内容", openLink: "打开链接"
     },
     en: {
-      brandName: "Qingfeng Wang", footerCredit: "© 2026 Qingfeng Wang", schoolName: "Chongqing College of International Business and Economics", navWork: "Work", navAbout: "About", navContact: "Contact", eyebrow: "UNITY · AR · INTERACTION",
+      brandName: "Qingfeng Wang", footerCredit: "© 2026 Qingfeng Wang", schoolName: "Chongqing College of International Business and Economics", navWork: "Work", navAbout: "About", navContact: "Contact", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "Turning interaction ideas into runnable worlds.", heroLede: "A Digital Media Technology undergraduate focused on Unity gameplay, AR experiences, and testable interactive systems. Graduating in June 2027.",
       viewWork: "View work", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "From gameplay to real places",
-      workNote: "Unity projects first, followed by systems and research work.", filterAll: "All", filterSystems: "Systems", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
-      aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, AR, robot systems integration, and software engineering.",
+      workNote: "Browse by Unity, AR, engineering, interactive installations, and 3D production.", filterAll: "All", filterUnity: "Unity work", filterAR: "AR interaction", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
+      aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, TouchDesigner installations, C4D/Blender 3D production, robot systems integration, and computer-vision research.",
       factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI",
       contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact",
       footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video", exhibitionTitle: "Exhibition record",
-      details: "View project notes", contribution: "Personal contribution", openLink: "Open link"
+      details: "View project notes", contribution: "Work completed", openLink: "Open link"
     }
   };
 
@@ -144,6 +144,31 @@
     });
     return section;
   }
+  function renderGallery(project) {
+    const gallery = project.media && project.media.gallery;
+    if (!gallery || !Array.isArray(gallery.images) || gallery.images.length === 0) return null;
+    const section = document.createElement("section");
+    section.className = "exhibition-evidence";
+    const heading = document.createElement("h4");
+    heading.textContent = text(gallery.title);
+    section.appendChild(heading);
+    if (gallery.note) {
+      const note = document.createElement("p");
+      note.textContent = text(gallery.note);
+      section.appendChild(note);
+    }
+    const imageGrid = document.createElement("div");
+    imageGrid.className = "exhibition-gallery";
+    gallery.images.forEach((imagePath) => {
+      const image = document.createElement("img");
+      image.src = imagePath;
+      image.alt = `${text(project.title)} · ${text(gallery.title)}`;
+      image.loading = "lazy";
+      imageGrid.appendChild(image);
+    });
+    section.appendChild(imageGrid);
+    return section;
+  }
   function renderProjects() {
     grid.replaceChildren();
     const visible = projects.filter((project) => activeFilter === "all" || project.category === activeFilter);
@@ -181,6 +206,8 @@
       details.appendChild(mediaNote);
       const exhibitions = renderExhibitions(project);
       if (exhibitions) details.appendChild(exhibitions);
+      const gallery = renderGallery(project);
+      if (gallery) details.appendChild(gallery);
       if (Array.isArray(project.media.previews) && project.media.previews.length > 0) {
         const previewList = document.createElement("ul");
         previewList.className = "preview-list";

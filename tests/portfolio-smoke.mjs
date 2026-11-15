@@ -20,7 +20,7 @@ test("page contains required semantic regions", () => {
 });
 
 test("catalog has Unity featured projects and bilingual fields", () => {
-  assert.ok(projects.length >= 5);
+  assert.ok(projects.length >= 10);
   assert.ok(projects.filter((project) => project.featured && project.category === "unity").length >= 3);
   for (const project of projects) {
     assert.ok(project.title.zh && project.title.en);
@@ -29,6 +29,16 @@ test("catalog has Unity featured projects and bilingual fields", () => {
     assert.match(project.media.poster, /^assets\/posters\/[^/]+\.(?:jpg|png|svg)$/);
     assert.ok(fs.existsSync(path.join(root, project.media.poster)));
   }
+});
+
+test("catalog uses specific discipline categories", () => {
+  const categories = new Set(projects.map((project) => project.category));
+  for (const category of ["unity", "ar", "engineering", "interactive", "modeling"]) {
+    assert.ok(categories.has(category), `missing category: ${category}`);
+  }
+  assert.doesNotMatch(content, /category:\s*["']systems["']/);
+  assert.ok(projects.some((project) => project.id === "disaster-education" && project.media.previews.length === 1));
+  assert.ok(projects.some((project) => project.id === "science-museum" && project.media.previews.length === 1));
 });
 
 test("media previews stay inside the repository", () => {
@@ -53,6 +63,19 @@ test("exhibition evidence points to local assets", () => {
         assert.match(imagePath, /^assets\/exhibitions\/[^/]+\.jpg$/);
         assert.ok(fs.existsSync(path.join(root, imagePath)));
       }
+    }
+  }
+});
+
+test("render galleries point to local assets", () => {
+  const galleryProjects = projects.filter((project) => project.media.gallery);
+  assert.ok(galleryProjects.some((project) => project.id === "blender-scene"));
+  assert.ok(galleryProjects.some((project) => project.id === "blender-keycap"));
+  for (const project of galleryProjects) {
+    assert.ok(project.media.gallery.title.zh && project.media.gallery.title.en);
+    for (const imagePath of project.media.gallery.images) {
+      assert.match(imagePath, /^assets\/renders\/[^/]+\/[^/]+\.png$/);
+      assert.ok(fs.existsSync(path.join(root, imagePath)));
     }
   }
 });
