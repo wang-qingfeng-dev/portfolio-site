@@ -61,7 +61,7 @@ test("media previews stay inside the repository", () => {
       assert.ok(fs.existsSync(path.join(root, preview.path)));
       if (preview.hdPath) assert.match(preview.hdPath, /^assets\/videos-(?:720p|hd)\/[^/]+\.mp4$/);
       for (const sourcePath of Object.values(preview.qualitySources || {})) {
-        if (sourcePath.includes("videos-1080p")) continue;
+        if (/^https?:\/\//.test(sourcePath) || sourcePath.includes("videos-1080p")) continue;
         assert.ok(fs.existsSync(path.join(root, sourcePath)), sourcePath);
       }
     }
@@ -142,7 +142,7 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /assetCandidates/);
   assert.match(app, /setVideoQuality\(video, fallback, preservePlayback, \{ currentTime, wasPlaying \}\)/);
   assert.match(app, /video\.src = candidates\[candidateIndex\]/);
-  assert.match(app, /canExpose1080/);
+  assert.doesNotMatch(app, /isGitHubPagesWithout1080|canExpose1080/);
   assert.match(app, /setVideoQuality\(video, "auto", false, undefined, false\)/);
   assert.match(app, /if \(loadNow\) video\.load\(\)/);
 });

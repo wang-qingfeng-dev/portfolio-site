@@ -77,17 +77,13 @@
     }
   }
   function qualitySourcesFor(preview) {
-    const mirror = mirrorConfig();
-    const host = typeof window.location?.hostname === "string" ? window.location.hostname : "";
-    // Only expose a 1080p source on GitHub Pages when that exact file is
-    // tracked by the public repository or the configured mirror provides it.
-    // Large originals stay hidden until they are uploaded to a release/CDN.
-    const isGitHubPages = /(?:^|\.)github\.io$/i.test(host);
-    const canExpose1080 = !isGitHubPages || preview.public1080 === true || (mirror.enabled && mirror.allow1080 === true);
+    // Expose configured 1080p paths on every host. Large files can be placed
+    // in the domestic mirror or a release; until then the error handler falls
+    // back to the verified 720p source without offering 480p.
     return {
       "480": preview.qualitySources?.["480"] || preview.path || "",
       "720": preview.qualitySources?.["720"] || preview.hdPath || "",
-      "1080": canExpose1080 ? (preview.qualitySources?.["1080"] || preview.fullHdPath || "") : ""
+      "1080": preview.qualitySources?.["1080"] || preview.fullHdPath || ""
     };
   }
   function configuredQualities(video) {

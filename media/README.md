@@ -13,7 +13,7 @@ The public web copies are grouped by quality:
 - `../assets/videos-480p/` — legacy low-bandwidth sources retained for archival fallback; they are not offered by the public selector.
 - `../assets/videos-hd/` — existing H.264 720p copies for the Unity/AR/robot/science-museum demos.
 - `../assets/videos-720p/` — generated 720p copies for TouchDesigner, XPPen, DaVinci Resolve, the AIGC film, and Live Onward.
-- `../assets/videos-1080p/` — original-resolution encodes. The 3D-shooter, robot, and XPPen files are tracked because they are below GitHub's single-file limit; larger originals remain ignored.
+- `../assets/videos-1080p/` — original-resolution encodes. The 3D-shooter, robot, and XPPen files are tracked because they are below GitHub's single-file limit; the larger AR, science-museum, Live Onward, and AIGC files are published in the public `media-1080p-v1` Release.
 
 All committed 720p copies use H.264 video, yuv420p, AAC audio, and fast-start MP4 metadata so common Chromium, Edge, Safari, and mobile browsers can decode the picture while streaming. The `向生而行` 720p copy is kept below GitHub's 100 MB hard limit, but a mainland mirror is still recommended for reliable loading in China.
 
@@ -26,4 +26,4 @@ The manifest records the source filename and the web-copy path. The complete ava
 
 Higher-quality local encodes are generated under `../assets/videos-hd/` and `../assets/videos-720p/` for previewing. The original-resolution 1080p release files are generated under `../assets/videos-1080p/` and described in `hd-1080p-manifest.json`. Only files within GitHub's single-file limit are tracked in the repository.
 
-For public deployment, upload the large files from `../assets/videos-1080p/` as assets of a public GitHub Release (or to a video CDN), then put each asset's public URL in the corresponding `qualitySources["1080"]` field in `content.js` or place the same path in the configured domestic mirror. The browser tries that high-resolution source first and falls back to the verified 720p repository copy if it is unavailable.
+The large files are published in [Release `media-1080p-v1`](https://github.com/wang-qingfeng-dev/portfolio-site/releases/tag/media-1080p-v1), and their public download URLs are wired into `content.js`. The browser tries each 1080p Release asset first and falls back to the verified 720p repository copy if it is unavailable. A domestic OSS/COS mirror can replace those URLs later for faster mainland delivery.
