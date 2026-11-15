@@ -18,7 +18,7 @@ The public site is also available at [wangqingfengdev.tech](https://wangqingfeng
 
 ## Media policy
 
-The public bundle uses real project screenshots and full-length H.264 demonstration videos. Automatic playback starts at the highest available tier and keeps 720p as the public floor; 480p is retained only as an internal failure fallback. Original high-bitrate recordings stay outside the repository where GitHub's file limit requires it; see `media/media-manifest.json`, `media/README.md`, and `docs/video-quality-availability.md` for the exact mapping. A failed high-quality source falls back without losing the current playback position.
+The public bundle uses real project screenshots and full-length H.264 demonstration videos. Automatic playback starts at the same-domain 720p tier to reduce first-load latency for mainland visitors; 1080p remains available as a manual choice, while 480p is retained only as an internal failure fallback. Original high-bitrate recordings stay outside the repository where GitHub's file limit requires it; see `media/media-manifest.json`, `media/README.md`, and `docs/video-quality-availability.md` for the exact mapping. A failed high-quality source falls back without losing the current playback position.
 
 The two moving-image projects use 2024 DaVinci Resolve footage and a 2025 AIGC short-film encode. The site labels them as course projects and does not claim ownership of third-party brand or generated assets beyond the work described.
 
