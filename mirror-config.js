@@ -4,5 +4,6 @@
 window.PORTFOLIO_MIRROR = Object.freeze({
   enabled: false,
   baseUrl: "",
+  allow1080: false,
   fallbackToPrimary: true
 });

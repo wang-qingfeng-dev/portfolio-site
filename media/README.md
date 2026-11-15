@@ -15,6 +15,8 @@ The public web copies are grouped by quality:
 - `../assets/videos-720p/` — generated 720p copies for TouchDesigner, XPPen, DaVinci Resolve, and the AIGC film.
 - `../assets/videos-1080p/` — original-resolution encodes kept locally and ignored by Git because several exceed GitHub's normal single-file limit.
 
+All committed 480p/720p copies use H.264 video, yuv420p, AAC audio, and fast-start MP4 metadata so common Chromium, Edge, Safari, and mobile browsers can decode the picture while streaming. The large `向生而行` 480p copy is kept below GitHub's 100 MB hard limit, but a mainland mirror is still recommended for reliable loading in China.
+
 Exhibition evidence supplied by the portfolio owner is stored under `../assets/exhibitions/`. The 2025 images document the TouchDesigner installation; the 2026 images document the Xiaozhi robot exhibition and its project board.
 Blender render evidence is stored under `../assets/renders/` and is used for the keycap-modeling project.
 

@@ -72,10 +72,16 @@
     }
   }
   function qualitySourcesFor(preview) {
+    const mirror = mirrorConfig();
+    const host = typeof window.location?.hostname === "string" ? window.location.hostname : "";
+    // GitHub Pages does not carry the ignored original-resolution files. Keep
+    // the public selector honest until a mirror has uploaded 1080p assets;
+    // local previews can still exercise the files in assets/videos-1080p.
+    const isGitHubPagesWithout1080 = /(?:^|\.)github\.io$/i.test(host) && !(mirror.enabled && mirror.allow1080 === true);
     return {
       "480": preview.qualitySources?.["480"] || preview.path || "",
       "720": preview.qualitySources?.["720"] || preview.hdPath || "",
-      "1080": preview.qualitySources?.["1080"] || preview.fullHdPath || ""
+      "1080": isGitHubPagesWithout1080 ? "" : (preview.qualitySources?.["1080"] || preview.fullHdPath || "")
     };
   }
   function availableQualities(video) {

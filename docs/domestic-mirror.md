@@ -10,6 +10,7 @@
 window.PORTFOLIO_MIRROR = Object.freeze({
   enabled: true,
   baseUrl: "https://你的存储域名",
+  allow1080: true,
   fallbackToPrimary: true
 });
 ```
@@ -17,6 +18,8 @@ window.PORTFOLIO_MIRROR = Object.freeze({
 `baseUrl` 必须指向包含 `assets/` 的 HTTPS 根目录。例如 bucket 根目录下应该能访问：
 
 `https://你的存储域名/assets/videos-480p/3dshoot-480p.mp4`
+
+只有在镜像已经上传 `assets/videos-1080p/` 并能正常返回视频时，才设置 `allow1080: true`。GitHub Pages 公共主站不会显示不存在的 1080p 文件，因此不会出现点击 1080p 后悄悄回退到 720p 的误导状态。
 
 ## 推荐部署
 

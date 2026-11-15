@@ -142,6 +142,7 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /assetCandidates/);
   assert.match(app, /setVideoQuality\(video, fallback, preservePlayback, \{ currentTime, wasPlaying \}\)/);
   assert.match(app, /video\.src = candidates\[candidateIndex\]/);
+  assert.match(app, /isGitHubPagesWithout1080/);
 });
 
 test("video quality tiers expose 480p, 720p, and 1080p sources", () => {
@@ -160,6 +161,7 @@ test("mirror configuration supports a domestic asset base with primary fallback"
   assert.match(html, /mirror-config\.js/);
   assert.match(mirrorConfig, /baseUrl/);
   assert.match(mirrorConfig, /fallbackToPrimary/);
+  assert.match(mirrorConfig, /allow1080/);
   assert.match(app, /PORTFOLIO_MIRROR/);
   assert.match(app, /assetUrl/);
   assert.match(app, /fallbackToPrimary/);
