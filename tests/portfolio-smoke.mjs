@@ -136,10 +136,10 @@ test("project years reflect the supplied portfolio timeline", () => {
   assert.equal(projects.find((project) => project.id === "blender-keycap")?.year, "2024");
 });
 
-test("academic highlights use verified, non-ranking claims", () => {
+test("academic highlights use the verified junior-year ranking", () => {
   assert.match(html, /academicHighlights/);
   assert.match(html + app, /2025[–-]2026/);
   assert.match(html + app, /90\.39/);
   assert.match(html + app, /Machine Learning Specialization/);
-  assert.doesNotMatch(html + app, /大三全年级第一|Junior-year.*first|1st in the entire grade/);
+  assert.match(html + app, /年级第 1 \/ 92|Ranked 1st of 92/);
 });
