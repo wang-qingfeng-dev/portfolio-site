@@ -14,6 +14,8 @@ Then open `http://127.0.0.1:4173/`.
 
 The site has no build step and no API key. Project copy lives in `content.js`; layout and responsive behavior live in `styles.css`; rendering and language/filter interactions live in `app.js`.
 
+The public site is also available at [wangqingfengdev.tech](https://wangqingfengdev.tech) after DNS propagation completes.
+
 ## Media policy
 
 The public bundle uses real project screenshots and full-length H.264 demonstration videos. Automatic playback starts at the highest available tier and keeps 720p as the public floor; 480p is retained only as an internal failure fallback. Original high-bitrate recordings stay outside the repository where GitHub's file limit requires it; see `media/media-manifest.json`, `media/README.md`, and `docs/video-quality-availability.md` for the exact mapping. A failed high-quality source falls back without losing the current playback position.
