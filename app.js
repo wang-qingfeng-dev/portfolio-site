@@ -97,9 +97,9 @@
     const available = availableQualities(video);
     if (!available.length) return "";
     if (requested !== "auto" && available.includes(requested)) return requested;
-    // Auto always starts at the highest available tier. Users can manually
-    // choose a lower available tier if their connection needs it.
-    return available[available.length - 1];
+    // 国内访问优先从同域名 720p 开始，减少首屏请求和跨境大文件卡顿。
+    // 1080p 仍保留在清晰度菜单中，由用户在网络条件允许时手动选择。
+    return available.includes(MIN_PUBLIC_QUALITY) ? MIN_PUBLIC_QUALITY : available[available.length - 1];
   }
   function lowerQuality(video, quality) {
     const available = configuredQualities(video);
@@ -266,7 +266,7 @@
       const target = video.closest(".project-visual") || video;
       const expanded = document.fullscreenElement === target || target.classList.contains("is-expanded");
       fullscreenButton.setAttribute("aria-label", expanded ? (language === "zh" ? "退出全屏" : "Exit fullscreen") : (language === "zh" ? "放大视频" : "Fullscreen"));
-      const resolvedQuality = video.dataset.resolvedQuality || availableQualities(video)[0] || "480";
+      const resolvedQuality = video.dataset.resolvedQuality || availableQualities(video)[0] || MIN_PUBLIC_QUALITY;
       const resolvedLabel = resolvedQuality + "p";
       qualityStatus.textContent = language === "zh" ? `当前 ${resolvedLabel}` : `Now ${resolvedLabel}`;
       quality.title = language === "zh" ? `当前清晰度：${resolvedLabel}` : `Current quality: ${resolvedLabel}`;

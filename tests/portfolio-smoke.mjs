@@ -162,7 +162,7 @@ test("video quality data retains source tiers while the public selector starts a
 test("public video playback never offers or selects a quality below 720p", () => {
   assert.match(app, /const QUALITY_LABELS = \[\"720\", \"1080\"\]/);
   assert.match(app, /QUALITY_RANK\[quality\] >= QUALITY_RANK\[MIN_PUBLIC_QUALITY\]/);
-  assert.match(app, /return available\[available\.length - 1\]/);
+  assert.match(app, /available\.includes\(MIN_PUBLIC_QUALITY\) \? MIN_PUBLIC_QUALITY : available\[available\.length - 1\]/);
   const previews = projects.flatMap((project) => project.media.previews ?? []);
   for (const preview of previews) {
     assert.ok(
@@ -172,11 +172,11 @@ test("public video playback never offers or selects a quality below 720p", () =>
   }
 });
 
-test("public playback defaults to the highest available quality and keeps 720p as the floor", () => {
+test("public playback defaults to same-domain 720p and keeps 720p as the floor", () => {
   assert.match(app, /MIN_PUBLIC_QUALITY/);
   assert.match(app, /const QUALITY_LABELS = \[\"720\", \"1080\"\]/);
   assert.match(app, /const ALL_QUALITY_LABELS = \[\"480\", \"720\", \"1080\"\]/);
-  assert.match(app, /return available\[available\.length - 1\]/);
+  assert.match(app, /available\.includes\(MIN_PUBLIC_QUALITY\) \? MIN_PUBLIC_QUALITY : available\[available\.length - 1\]/);
   const liveOnward = projects.find((project) => project.id === "disaster-education");
   const preview = liveOnward?.media.previews?.[0];
   assert.ok(preview?.qualitySources?.["720"], "Live Onward must expose a 720p source");
