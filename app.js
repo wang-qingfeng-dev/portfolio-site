@@ -7,7 +7,7 @@
       brandName: "王青锋", footerCredit: "© 2026 王青锋", schoolName: "重庆对外经贸学院", navWork: "作品", navAbout: "关于我", navContact: "联系", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "把交互想法做成可运行的世界。", heroLede: "数字媒体技术本科生，专注 Unity 游戏玩法、AR 体验和可验证的交互系统。预计 2027 年 6 月毕业。",
       viewWork: "查看作品", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "从玩法到真实场景",
-      workNote: "按 Unity、AR、工程、交互装置和建模动画方向浏览。", filterAll: "全部", filterUnity: "Unity 作品", filterAR: "AR 交互", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
+      workNote: "按 Unity 作品、工程、交互装置和建模动画方向浏览。", filterAll: "全部", filterUnity: "Unity 作品", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
       aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、TouchDesigner 实时装置、C4D/Blender 三维制作、机器人系统集成和计算机视觉研究。",
       factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI",
       contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式",
@@ -18,7 +18,7 @@
       brandName: "Qingfeng Wang", footerCredit: "© 2026 Qingfeng Wang", schoolName: "Chongqing College of International Business and Economics", navWork: "Work", navAbout: "About", navContact: "Contact", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "Turning interaction ideas into runnable worlds.", heroLede: "A Digital Media Technology undergraduate focused on Unity gameplay, AR experiences, and testable interactive systems. Graduating in June 2027.",
       viewWork: "View work", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "From gameplay to real places",
-      workNote: "Browse by Unity, AR, engineering, interactive installations, and 3D production.", filterAll: "All", filterUnity: "Unity work", filterAR: "AR interaction", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
+      workNote: "Browse by Unity work, engineering, interactive installations, and 3D production.", filterAll: "All", filterUnity: "Unity work", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
       aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, TouchDesigner installations, C4D/Blender 3D production, robot systems integration, and computer-vision research.",
       factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI",
       contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact",
@@ -181,7 +181,7 @@
       body.className = "project-body";
       const meta = document.createElement("div");
       meta.className = "project-meta";
-      meta.innerHTML = `<span>${project.featured ? (language === "zh" ? "精选项目" : "Featured") : (language === "zh" ? "补充项目" : "Additional")}</span><span>${project.year}</span>`;
+      meta.innerHTML = `<span>${project.year}</span>`;
       body.appendChild(meta);
       const title = document.createElement("h3");
       title.textContent = text(project.title);

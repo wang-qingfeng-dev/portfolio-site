@@ -38,7 +38,7 @@ window.PORTFOLIO_PROJECTS = [
   {
     id: "ar-unity-model",
     featured: true,
-    category: "ar",
+    category: "unity",
     year: "2026",
     title: { zh: "AR 立体书交互体验", en: "AR Pop-up Book Experience" },
     summary: { zh: "基于图像识别的 AR 叙事体验，支持模型交互、缩放、旋转和场景切换。", en: "An image-tracked AR narrative experience with model interaction, scaling, rotation, and scene switching." },
@@ -83,18 +83,6 @@ window.PORTFOLIO_PROJECTS = [
     role: { zh: "完成产品模型、材质、镜头动画、灯光渲染和广告成片制作。", en: "Created the product models, materials, camera animation, lighting, rendering, and final advertisement edit." },
     tech: ["Cinema 4D", "Product Modeling", "Animation", "Rendering"],
     media: { status: "author-demo", poster: "assets/posters/c4d-xppen.jpg", previews: [{ path: "assets/videos/xppen-c4d-full.mp4", label: { zh: "XPPen 广告完整成片", en: "Full XPPen advertisement" }, duration: "" }], note: { zh: "课程项目成片与 Cinema 4D 源文件已整理；项目使用 XPPen 产品品牌素材。", en: "The course-project film and Cinema 4D source files are organized; the project uses XPPen product-brand assets." } },
-    links: []
-  },
-  {
-    id: "blender-scene",
-    featured: false,
-    category: "modeling",
-    year: "2025",
-    title: { zh: "Blender 场景建模", en: "Blender Environment Modeling" },
-    summary: { zh: "完成一套可从多角度展示的 Blender 场景建模、材质和灯光渲染。", en: "A Blender environment study with modeled assets, materials, lighting, and multi-angle renders." },
-    role: { zh: "完成场景建模、材质布置、灯光调整和多角度渲染。", en: "Created the environment models, materials, lighting setup, and multi-angle renders." },
-    tech: ["Blender", "Environment Modeling", "Materials", "Lighting"],
-    media: { status: "author-demo", poster: "assets/posters/blender-scene.png", note: { zh: "包含 Blender 工程文件、全景图和细节渲染图。", en: "Includes the Blender project file, wide views, and detail renders." }, gallery: { title: { zh: "渲染图", en: "Render views" }, note: { zh: "全景与细节渲染。", en: "Wide and detail renders." }, images: ["assets/renders/blender-scene/scene-wide-1.png", "assets/renders/blender-scene/scene-wide-2.png", "assets/renders/blender-scene/scene-wide-3.png", "assets/renders/blender-scene/scene-detail-1.png", "assets/renders/blender-scene/scene-detail-2.png", "assets/renders/blender-scene/scene-detail-3.png"] } },
     links: []
   },
   {

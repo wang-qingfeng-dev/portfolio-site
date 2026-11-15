@@ -33,12 +33,17 @@ test("catalog has Unity featured projects and bilingual fields", () => {
 
 test("catalog uses specific discipline categories", () => {
   const categories = new Set(projects.map((project) => project.category));
-  for (const category of ["unity", "ar", "engineering", "interactive", "modeling"]) {
+  for (const category of ["unity", "engineering", "interactive", "modeling"]) {
     assert.ok(categories.has(category), `missing category: ${category}`);
   }
   assert.doesNotMatch(content, /category:\s*["']systems["']/);
   assert.ok(projects.some((project) => project.id === "disaster-education" && project.media.previews.length === 1));
   assert.ok(projects.some((project) => project.id === "science-museum" && project.media.previews.length === 1));
+});
+
+test("project cards use equal presentation", () => {
+  assert.doesNotMatch(app, /精选项目|补充项目|Featured|Additional/);
+  assert.match(app, /meta\.innerHTML = `\<span>\$\{project\.year\}/);
 });
 
 test("media previews stay inside the repository", () => {
@@ -69,7 +74,6 @@ test("exhibition evidence points to local assets", () => {
 
 test("render galleries point to local assets", () => {
   const galleryProjects = projects.filter((project) => project.media.gallery);
-  assert.ok(galleryProjects.some((project) => project.id === "blender-scene"));
   assert.ok(galleryProjects.some((project) => project.id === "blender-keycap"));
   for (const project of galleryProjects) {
     assert.ok(project.media.gallery.title.zh && project.media.gallery.title.en);
