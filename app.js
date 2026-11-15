@@ -11,7 +11,7 @@
       aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、AR、机器人系统集成和软件工程。",
       factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI",
       contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式",
-      footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频",
+      footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频", exhibitionTitle: "展览记录",
       details: "查看项目说明", contribution: "个人贡献", openLink: "打开链接"
     },
     en: {
@@ -22,7 +22,7 @@
       aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, AR, robot systems integration, and software engineering.",
       factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI",
       contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact",
-      footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video",
+      footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video", exhibitionTitle: "Exhibition record",
       details: "View project notes", contribution: "Personal contribution", openLink: "Open link"
     }
   };
@@ -113,6 +113,37 @@
     });
     return wrapper;
   }
+  function renderExhibitions(project) {
+    const exhibitions = Array.isArray(project.exhibitions) ? project.exhibitions : [];
+    if (exhibitions.length === 0) return null;
+    const section = document.createElement("section");
+    section.className = "exhibition-evidence";
+    const heading = document.createElement("h4");
+    heading.textContent = translations[language].exhibitionTitle;
+    section.appendChild(heading);
+    exhibitions.forEach((exhibition) => {
+      const item = document.createElement("article");
+      item.className = "exhibition-item";
+      const title = document.createElement("h5");
+      title.textContent = `${exhibition.year} · ${text(exhibition.title)}`;
+      item.appendChild(title);
+      const note = document.createElement("p");
+      note.textContent = text(exhibition.note);
+      item.appendChild(note);
+      const gallery = document.createElement("div");
+      gallery.className = "exhibition-gallery";
+      (exhibition.images || []).forEach((imagePath) => {
+        const image = document.createElement("img");
+        image.src = imagePath;
+        image.alt = `${text(project.title)} · ${text(exhibition.title)}`;
+        image.loading = "lazy";
+        gallery.appendChild(image);
+      });
+      item.appendChild(gallery);
+      section.appendChild(item);
+    });
+    return section;
+  }
   function renderProjects() {
     grid.replaceChildren();
     const visible = projects.filter((project) => activeFilter === "all" || project.category === activeFilter);
@@ -148,12 +179,14 @@
       const mediaNote = document.createElement("p");
       mediaNote.textContent = text(project.media.note);
       details.appendChild(mediaNote);
+      const exhibitions = renderExhibitions(project);
+      if (exhibitions) details.appendChild(exhibitions);
       if (Array.isArray(project.media.previews) && project.media.previews.length > 0) {
         const previewList = document.createElement("ul");
         previewList.className = "preview-list";
         project.media.previews.forEach((preview) => {
           const item = document.createElement("li");
-          item.textContent = `${text(preview.label)} · ${preview.duration || ""}`.trim();
+          item.textContent = preview.duration ? `${text(preview.label)} · ${preview.duration}` : text(preview.label);
           previewList.appendChild(item);
           if (project.media.previews.length > 1 && preview !== project.media.previews[0]) {
             const inlineVideo = document.createElement("video");

@@ -41,6 +41,22 @@ test("media previews stay inside the repository", () => {
   }
 });
 
+test("exhibition evidence points to local assets", () => {
+  const exhibitionProjects = projects.filter((project) => Array.isArray(project.exhibitions));
+  assert.ok(exhibitionProjects.some((project) => project.id === "robot"));
+  assert.ok(exhibitionProjects.some((project) => project.id === "touchdesigner-installation"));
+  for (const project of exhibitionProjects) {
+    for (const exhibition of project.exhibitions) {
+      assert.ok(exhibition.year);
+      assert.ok(exhibition.title.zh && exhibition.title.en);
+      for (const imagePath of exhibition.images) {
+        assert.match(imagePath, /^assets\/exhibitions\/[^/]+\.jpg$/);
+        assert.ok(fs.existsSync(path.join(root, imagePath)));
+      }
+    }
+  }
+});
+
 test("public content has no local Windows paths or credentials", () => {
   assert.doesNotMatch(html + content, /[A-Z]:\\\\|password|api[_-]?key|token/i);
 });

@@ -44,8 +44,22 @@ window.PORTFOLIO_PROJECTS = [
     summary: { zh: "Arduino/ESP32 软硬件集成案例，包含人脸跟踪、舵机控制、触摸屏和语音模块。", en: "A systems-integration case combining Arduino/ESP32, face tracking, servo control, touch display, and voice modules." },
     role: { zh: "个人工作：固件整合、交互逻辑、系统调试和工程文档。", en: "Personal work: firmware integration, interaction logic, system debugging, and engineering documentation." },
     tech: ["Arduino", "ESP32", "I²C", "Servo", "Embedded"],
-    media: { status: "author-demo", poster: "assets/posters/robot.jpg", previews: [{ path: "assets/videos/robot-full.mp4", hdPath: "assets/videos-hd/robot-hd.mp4", label: { zh: "机器人完整演示", en: "Full robot demo" }, duration: "01:02" }], note: { zh: "完整交互装置演示：语音、屏幕表情、遥控和人脸跟踪流程。", en: "Full interactive-device demo: voice, screen expressions, remote control, and face-tracking flow." } },
+    media: { status: "author-demo", poster: "assets/posters/robot.jpg", previews: [{ path: "assets/videos/robot-full.mp4", hdPath: "assets/videos-hd/robot-hd.mp4", label: { zh: "机器人完整演示", en: "Full robot demo" }, duration: "01:02" }], note: { zh: "完整交互装置演示：语音、屏幕表情、遥控和人脸跟踪流程。项目于 2026 年夏季参加校内数字艺术展览。", en: "Full interactive-device demo: voice, screen expressions, remote control, and face tracking. The project was exhibited at a campus digital-art exhibition in summer 2026." } },
+    exhibitions: [{ year: "2026", title: { zh: "数字艺术周作品展 · PRE RENDERING", en: "Digital Art Week Exhibition · PRE RENDERING" }, note: { zh: "小智桌面陪伴机器人作为交互装置完成现场部署与展示。", en: "The Xiaozhi desktop companion robot was deployed and exhibited as an interactive installation." }, images: ["assets/exhibitions/robot-2026-installation.jpg", "assets/exhibitions/robot-2026-poster.jpg"] }],
     links: [{ label: { zh: "GitHub（私有）", en: "GitHub (private)" }, href: "https://github.com/wang-qingfeng-dev/xiaozhi-desktop-robot" }]
+  },
+  {
+    id: "touchdesigner-installation",
+    featured: false,
+    category: "systems",
+    year: "2025",
+    title: { zh: "TouchDesigner 交互装置", en: "TouchDesigner Interactive Installation" },
+    summary: { zh: "用 TouchDesigner 和实时追踪组件构建可在展览现场运行的交互视觉装置。", en: "An interactive visual installation built with TouchDesigner and real-time tracking components for exhibition use." },
+    role: { zh: "个人工作：TouchDesigner 工程搭建、实时交互逻辑、MediaPipe 组件整合和现场调试。", en: "Personal work: TouchDesigner project setup, real-time interaction logic, MediaPipe integration, and exhibition debugging." },
+    tech: ["TouchDesigner", "MediaPipe", "Real-time", "Interactive Installation"],
+    media: { status: "author-demo", poster: "assets/posters/touchdesigner.jpg", previews: [{ path: "assets/videos/touchdesigner-2025-full.mp4", label: { zh: "期末交互装置演示", en: "Final interactive-installation demo" }, duration: "" }], note: { zh: "完整演示视频与现场照片展示了可运行的 TouchDesigner 交互装置。项目于 2025 年夏季参加校内数字艺术展览。", en: "The full demo and exhibition photos document a runnable TouchDesigner interactive installation. The project was exhibited at a campus digital-art exhibition in summer 2025." } },
+    exhibitions: [{ year: "2025", title: { zh: "数字艺术周作品展 · PRE RENDERING", en: "Digital Art Week Exhibition · PRE RENDERING" }, note: { zh: "交互装置在校内展览现场完成部署，并通过现场屏幕展示实时视觉反馈。", en: "The interactive installation was deployed at the campus exhibition and presented real-time visual feedback on site." }, images: ["assets/exhibitions/td-2025-installation.jpg", "assets/exhibitions/td-2025-work.jpg", "assets/exhibitions/td-2025-poster.jpg"] }],
+    links: []
   },
   {
     id: "ielts-writing-studio",
