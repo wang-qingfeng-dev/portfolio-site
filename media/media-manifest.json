@@ -5,7 +5,7 @@
       "projectId": "3dshoot",
       "filename": "3D射击游戏demo展示.mov",
       "status": "author-demo",
-      "publicPath": "assets/videos/3dshoot-full.mp4",
+      "publicPath": "assets/videos-480p/3dshoot-480p.mp4",
       "duration": "01:12",
       "note": "Full H.264 operation demo; the source recording contains a silent audio track."
     },
@@ -13,7 +13,7 @@
       "projectId": "disaster-education",
       "filename": "向生而行演示.mov",
       "status": "author-demo",
-      "publicPath": "assets/videos/live-onward-full.mp4",
+      "publicPath": "assets/videos-480p/live-onward-480p.mp4",
       "duration": "16:37",
       "note": "Full H.264 operation demo."
     },
@@ -21,7 +21,7 @@
       "projectId": "science-museum",
       "filename": "科技馆展览游玩演示.mov",
       "status": "author-demo",
-      "publicPath": "assets/videos/science-museum-full.mp4",
+      "publicPath": "assets/videos-480p/science-museum-480p.mp4",
       "duration": "03:11",
       "note": "Full H.264 science-museum exhibition demo."
     },
@@ -29,7 +29,7 @@
       "projectId": "ar-unity-model",
       "filename": "实体交互视频.mp4",
       "status": "author-demo",
-      "publicPath": "assets/videos/ar-full.mp4",
+      "publicPath": "assets/videos-480p/ar-480p.mp4",
       "duration": "02:44",
       "note": "Full H.264 AR interaction demo."
     },
@@ -37,7 +37,7 @@
       "projectId": "robot",
       "filename": "小智机器人展示视频.mp4",
       "status": "author-demo",
-      "publicPath": "assets/videos/robot-full.mp4",
+      "publicPath": "assets/videos-480p/robot-480p.mp4",
       "duration": "01:02",
       "note": "Full H.264 interactive-device demo."
     },
@@ -45,9 +45,25 @@
       "projectId": "xppen-c4d",
       "filename": "XPpen.mp4",
       "status": "author-demo",
-      "publicPath": "assets/videos/xppen-c4d-full.mp4",
+      "publicPath": "assets/videos-480p/xppen-c4d-480p.mp4",
       "duration": "00:15",
       "note": "Cinema 4D product-advertisement demo."
+    },
+    {
+      "projectId": "davinci-color-grade",
+      "filename": "e3205206bcec18797e4ddcd7c3a3aa17_raw.mp4",
+      "status": "author-demo",
+      "publicPath": "assets/videos-480p/davinci-color-grade-480p.mp4",
+      "duration": "00:59",
+      "note": "2024 DaVinci Resolve color-grading course project."
+    },
+    {
+      "projectId": "aigc-civilization-reboot",
+      "filename": "《文明重启》最终版.mp4",
+      "status": "author-demo",
+      "publicPath": "assets/videos-480p/aigc-civilization-reboot-480p.mp4",
+      "duration": "04:55",
+      "note": "2025 AIGC short-film editing course project."
     }
   ]
 }

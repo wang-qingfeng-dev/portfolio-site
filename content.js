@@ -6,9 +6,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2026",
     title: { zh: "第三人称射击游戏", en: "Third-Person Zombie Shooter" },
     summary: { zh: "用 Unity 搭建可玩的第三人称战斗循环：移动、瞄准、射击和敌人追击。", en: "A playable third-person combat loop built in Unity: movement, aiming, shooting, and enemy pursuit." },
+    description: { zh: "一个使用 Unity 制作的第三人称射击游戏原型，围绕移动、瞄准、射击和敌人追击构成完整战斗循环。玩家在场景中探索，并通过射线检测与导航逻辑完成战斗互动。", en: "A Unity third-person shooter prototype built around a complete loop of movement, aiming, shooting, and enemy pursuit. The player explores the scene and engages enemies through raycast weapons and navigation logic." },
     role: { zh: "完成玩法脚本、敌人逻辑、武器和运行调试。", en: "Implemented gameplay scripts, enemy logic, weapons, and runtime debugging." },
     tech: ["Unity", "C#", "NavMesh", "Raycast"],
-    media: { status: "author-demo", poster: "assets/posters/3dshoot.jpg", previews: [{ path: "assets/videos/3dshoot-full.mp4", hdPath: "assets/videos-hd/3dshoot-hd.mp4", label: { zh: "完整射击循环演示", en: "Full combat loop demo" }, duration: "01:12" }], note: { zh: "完整操作演示：移动、瞄准、射击与敌人追击。原始录制没有有效音轨，因此此视频无声音。", en: "Full operation demo: movement, aiming, shooting, and enemy pursuit. The original recording contains no usable audio track, so this video is silent." } },
+    media: { status: "author-demo", poster: "assets/posters/3dshoot.jpg", previews: [{ path: "assets/videos-480p/3dshoot-480p.mp4", hdPath: "assets/videos-hd/3dshoot-hd.mp4", qualitySources: { "480": "assets/videos-480p/3dshoot-480p.mp4", "720": "assets/videos-hd/3dshoot-hd.mp4", "1080": "assets/videos-1080p/3dshoot-1080p.mp4" }, label: { zh: "完整射击循环演示", en: "Full combat loop demo" }, duration: "01:12" }], note: { zh: "完整操作演示：移动、瞄准、射击与敌人追击。原始录制没有有效音轨，因此此视频无声音。", en: "Full operation demo: movement, aiming, shooting, and enemy pursuit. The original recording contains no usable audio track, so this video is silent." } },
     links: []
   },
   {
@@ -18,9 +19,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2026",
     title: { zh: "向生而行 · 灾害教育体验", en: "Live Onward · Disaster Education" },
     summary: { zh: "把校园地震应急流程转化为可探索、可验证的 Unity 交互场景。", en: "A Unity interactive scenario that turns campus earthquake-safety procedures into an explorable, testable experience." },
+    description: { zh: "一个将校园地震应急流程转化为可探索的 Unity 交互场景的项目。玩家通过第三人称控制完成场景探索、任务推进和应急操作，并从 HUD 与反馈中获得流程提示。", en: "A Unity interactive scenario that turns campus earthquake-safety procedures into an explorable experience. Players explore in third person, progress through tasks, and follow emergency actions through HUD guidance and feedback." },
     role: { zh: "完成场景交互、第三人称控制、剧情流程、HUD、灯光与验证工具。", en: "Implemented scene interactions, third-person control, narrative flow, HUD, lighting, and validation tools." },
     tech: ["Unity 6", "C#", "Cinemachine", "Input System", "Shader"],
-    media: { status: "author-demo", poster: "assets/posters/disaster.jpg", previews: [{ path: "assets/videos/live-onward-full.mp4", hdPath: "assets/videos-hd/live-onward-hd.mp4", label: { zh: "向生而行完整演示", en: "Full Live Onward demo" }, duration: "16:37" }], note: { zh: "完整灾害教育交互演示：探索场景、应急流程和任务反馈。", en: "Full disaster-education interaction demo: scene exploration, emergency procedures, and task feedback." } },
+    media: { status: "author-demo", poster: "assets/posters/disaster.jpg", previews: [{ path: "assets/videos-480p/live-onward-480p.mp4", hdPath: "", qualitySources: { "480": "assets/videos-480p/live-onward-480p.mp4", "1080": "assets/videos-1080p/live-onward-1080p.mp4" }, label: { zh: "向生而行完整演示", en: "Full Live Onward demo" }, duration: "16:37" }], note: { zh: "完整灾害教育交互演示：探索场景、应急流程和任务反馈。", en: "Full disaster-education interaction demo: scene exploration, emergency procedures, and task feedback." } },
     links: []
   },
   {
@@ -30,9 +32,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2024",
     title: { zh: "科技馆展览互动体验", en: "Science Museum Interactive Exhibition" },
     summary: { zh: "为科技馆展览制作的 Unity 互动体验，包含未来城市科技馆场景和现场展示流程。", en: "A Unity interactive experience for a science-museum exhibition, with a future-city museum scene and an exhibition-ready flow." },
+    description: { zh: "一个面向科技馆展示的 Unity 互动体验，构建未来城市科技博物馆场景。观众可以在现场演示版本中探索空间、触发交互并查看展览内容。", en: "A Unity interactive experience for a science-museum exhibition, set in a future-city technology museum. Visitors can explore the space, trigger interactions, and browse exhibition content in the demonstration build." },
     role: { zh: "完成 Unity 展览场景、交互流程、界面逻辑和现场演示版本。", en: "Built the Unity exhibition scene, interaction flow, interface logic, and demo build." },
     tech: ["Unity", "C#", "Interactive Exhibition", "UI"],
-    media: { status: "author-demo", poster: "assets/posters/science.png", previews: [{ path: "assets/videos/science-museum-full.mp4", hdPath: "assets/videos-hd/science-museum-hd.mp4", label: { zh: "科技馆完整演示", en: "Full science-museum demo" }, duration: "03:11" }], note: { zh: "独立于《向生而行》的科技馆展览项目，展示未来城市科技博物馆中的交互流程。", en: "A separate science-museum exhibition project from Live Onward, showing an interactive flow inside a future-city science museum." } },
+    media: { status: "author-demo", poster: "assets/posters/science.png", previews: [{ path: "assets/videos-480p/science-museum-480p.mp4", hdPath: "assets/videos-hd/science-museum-hd.mp4", qualitySources: { "480": "assets/videos-480p/science-museum-480p.mp4", "720": "assets/videos-hd/science-museum-hd.mp4", "1080": "assets/videos-1080p/science-museum-1080p.mp4" }, label: { zh: "科技馆完整演示", en: "Full science-museum demo" }, duration: "03:11" }], note: { zh: "视频展示未来城市科技博物馆中的空间探索、交互触发和展览内容浏览流程。", en: "The video shows space exploration, interaction triggers, and exhibition-content browsing inside a future-city technology museum." } },
     links: []
   },
   {
@@ -42,9 +45,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2026",
     title: { zh: "AR 立体书交互体验", en: "AR Pop-up Book Experience" },
     summary: { zh: "基于图像识别的 AR 叙事体验，支持模型交互、缩放、旋转和场景切换。", en: "An image-tracked AR narrative experience with model interaction, scaling, rotation, and scene switching." },
+    description: { zh: "一个将实体历史立体书与 Unity AR 应用结合的团队项目。用户通过手机识别实体书页上的图像目标，查看对应的历史场景和 3D 内容，并可以进行旋转、缩放、地点选择和详情浏览。", en: "A team project that combines a physical historical pop-up book with a Unity AR application. Users scan image targets on the book with a phone to view related historical scenes and 3D content, then rotate, scale, choose locations, and browse details." },
     role: { zh: "完成 Unity 互动场景、图像识别触发、模型链接、内容切换、缩放旋转和移动端运行。", en: "Built the Unity interaction scenes, image-recognition triggers, model links, content switching, scaling, rotation, and mobile runtime." },
     tech: ["Unity", "Vuforia", "AR", "Android"],
-    media: { status: "author-demo", poster: "assets/posters/ar.jpg", previews: [{ path: "assets/videos/ar-full.mp4", hdPath: "assets/videos-hd/ar-hd.mp4", label: { zh: "AR 实体交互完整演示", en: "Full AR interaction demo" }, duration: "02:44" }], note: { zh: "完整实体交互演示：图像识别、内容切换和移动端体验。", en: "Full physical interaction demo: image recognition, content switching, and the mobile experience." } },
+    media: { status: "author-demo", poster: "assets/posters/ar.jpg", previews: [{ path: "assets/videos-480p/ar-480p.mp4", hdPath: "assets/videos-hd/ar-hd.mp4", qualitySources: { "480": "assets/videos-480p/ar-480p.mp4", "720": "assets/videos-hd/ar-hd.mp4", "1080": "assets/videos-1080p/ar-1080p.mp4" }, label: { zh: "AR 实体交互完整演示", en: "Full AR interaction demo" }, duration: "02:44" }], note: { zh: "完整实体交互演示：图像识别、内容切换和移动端体验。", en: "Full physical interaction demo: image recognition, content switching, and the mobile experience." } },
     links: [{ label: { zh: "项目说明", en: "Project notes" }, href: "#contact" }]
   },
   {
@@ -54,9 +58,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2026",
     title: { zh: "小智桌面陪伴机器人", en: "Xiaozhi Desktop Companion Robot" },
     summary: { zh: "Arduino/ESP32 软硬件集成案例，包含人脸跟踪、舵机控制、触摸屏和语音模块。", en: "A systems-integration case combining Arduino/ESP32, face tracking, servo control, touch display, and voice modules." },
+    description: { zh: "一个基于 Arduino/ESP32 的桌面交互装置，将人脸跟踪、水平与垂直舵机、触摸屏和语音模块组合成可运行的陪伴机器人。系统通过摄像头输入和表情、动作反馈完成现场互动。", en: "A runnable Arduino/ESP32 desktop interactive device that combines face tracking, pan-and-tilt servos, a touch display, and a voice module. Camera input drives expressive motion and feedback during interaction." },
     role: { zh: "完成固件整合、交互逻辑、系统调试和工程文档。", en: "Implemented firmware integration, interaction logic, system debugging, and engineering documentation." },
     tech: ["Arduino", "ESP32", "I²C", "Servo", "Embedded"],
-    media: { status: "author-demo", poster: "assets/posters/robot.jpg", previews: [{ path: "assets/videos/robot-full.mp4", hdPath: "assets/videos-hd/robot-hd.mp4", label: { zh: "机器人完整演示", en: "Full robot demo" }, duration: "01:02" }], note: { zh: "完整交互装置演示：语音、屏幕表情、遥控和人脸跟踪流程。项目于 2026 年夏季参加校内数字艺术展览。", en: "Full interactive-device demo: voice, screen expressions, remote control, and face tracking. The project was exhibited at a campus digital-art exhibition in summer 2026." } },
+    media: { status: "author-demo", poster: "assets/posters/robot.jpg", previews: [{ path: "assets/videos-480p/robot-480p.mp4", hdPath: "assets/videos-hd/robot-hd.mp4", qualitySources: { "480": "assets/videos-480p/robot-480p.mp4", "720": "assets/videos-hd/robot-hd.mp4", "1080": "assets/videos-1080p/robot-1080p.mp4" }, label: { zh: "机器人完整演示", en: "Full robot demo" }, duration: "01:02" }], note: { zh: "完整交互装置演示：语音、屏幕表情、遥控和人脸跟踪流程。项目于 2026 年夏季参加校内数字艺术展览。", en: "Full interactive-device demo: voice, screen expressions, remote control, and face tracking. The project was exhibited at a campus digital-art exhibition in summer 2026." } },
     exhibitions: [{ year: "2026", title: { zh: "数字艺术周作品展 · PRE RENDERING", en: "Digital Art Week Exhibition · PRE RENDERING" }, note: { zh: "小智桌面陪伴机器人作为交互装置完成现场部署与展示。", en: "The Xiaozhi desktop companion robot was deployed and exhibited as an interactive installation." }, images: ["assets/exhibitions/robot-2026-installation.jpg", "assets/exhibitions/robot-2026-poster.jpg"] }],
     links: [{ label: { zh: "GitHub（私有）", en: "GitHub (private)" }, href: "https://github.com/wang-qingfeng-dev/xiaozhi-desktop-robot" }]
   },
@@ -67,9 +72,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2025",
     title: { zh: "TouchDesigner 交互装置", en: "TouchDesigner Interactive Installation" },
     summary: { zh: "用 TouchDesigner 和实时追踪组件构建可在展览现场运行的交互视觉装置。", en: "An interactive visual installation built with TouchDesigner and real-time tracking components for exhibition use." },
+    description: { zh: "一个使用 TouchDesigner 构建的实时交互视觉装置。观众的动作和现场输入驱动画面变化，作品在校园展览中以可运行的现场版本呈现。", en: "A real-time interactive visual installation built with TouchDesigner. Audience movement and live input drive visual changes, and the work was presented as a runnable installation at a campus exhibition." },
     role: { zh: "完成 TouchDesigner 工程搭建、实时交互逻辑、MediaPipe 组件整合和现场调试。", en: "Built the TouchDesigner project, real-time interaction logic, MediaPipe integration, and exhibition debugging workflow." },
     tech: ["TouchDesigner", "MediaPipe", "Real-time", "Interactive Installation"],
-    media: { status: "author-demo", poster: "assets/posters/touchdesigner.jpg", previews: [{ path: "assets/videos/touchdesigner-2025-full.mp4", label: { zh: "期末交互装置演示", en: "Final interactive-installation demo" }, duration: "" }], note: { zh: "完整演示视频与现场照片展示了可运行的 TouchDesigner 交互装置。项目于 2025 年夏季参加校内数字艺术展览。", en: "The full demo and exhibition photos document a runnable TouchDesigner interactive installation. The project was exhibited at a campus digital-art exhibition in summer 2025." } },
+    media: { status: "author-demo", poster: "assets/posters/touchdesigner.jpg", previews: [{ path: "assets/videos-480p/touchdesigner-480p.mp4", hdPath: "assets/videos-720p/touchdesigner-720p.mp4", qualitySources: { "480": "assets/videos-480p/touchdesigner-480p.mp4", "720": "assets/videos-720p/touchdesigner-720p.mp4" }, label: { zh: "期末交互装置演示", en: "Final interactive-installation demo" }, duration: "00:09" }], note: { zh: "完整演示视频与现场照片展示了可运行的 TouchDesigner 交互装置。项目于 2025 年夏季参加校内数字艺术展览。", en: "The full demo and exhibition photos document a runnable TouchDesigner interactive installation. The project was exhibited at a campus digital-art exhibition in summer 2025." } },
     exhibitions: [{ year: "2025", title: { zh: "数字艺术周作品展 · PRE RENDERING", en: "Digital Art Week Exhibition · PRE RENDERING" }, note: { zh: "交互装置在校内展览现场完成部署，并通过现场屏幕展示实时视觉反馈。", en: "The interactive installation was deployed at the campus exhibition and presented real-time visual feedback on site." }, images: ["assets/exhibitions/td-2025-installation.jpg", "assets/exhibitions/td-2025-work.jpg", "assets/exhibitions/td-2025-poster.jpg"] }],
     links: []
   },
@@ -80,9 +86,10 @@ window.PORTFOLIO_PROJECTS = [
     year: "2025",
     title: { zh: "XPPen 产品广告动画", en: "XPPen Product Advertisement" },
     summary: { zh: "使用 Cinema 4D 完成数位笔产品的建模、材质、镜头动画和广告成片。", en: "A Cinema 4D product advertisement covering modeling, materials, camera animation, and final editing." },
+    description: { zh: "一个使用 Cinema 4D 制作的数位笔产品广告动画，围绕产品建模、材质表现、镜头运动和灯光渲染组织视觉节奏，并输出完整广告成片。", en: "A Cinema 4D product advertisement that uses product modeling, material presentation, camera movement, lighting, and rendering to build a complete visual sequence." },
     role: { zh: "完成产品模型、材质、镜头动画、灯光渲染和广告成片制作。", en: "Created the product models, materials, camera animation, lighting, rendering, and final advertisement edit." },
     tech: ["Cinema 4D", "Product Modeling", "Animation", "Rendering"],
-    media: { status: "author-demo", poster: "assets/posters/c4d-xppen.jpg", previews: [{ path: "assets/videos/xppen-c4d-full.mp4", label: { zh: "XPPen 广告完整成片", en: "Full XPPen advertisement" }, duration: "00:15" }], note: { zh: "课程项目成片与 Cinema 4D 源文件已整理；项目使用 XPPen 产品品牌素材。", en: "The course-project film and Cinema 4D source files are organized; the project uses XPPen product-brand assets." } },
+    media: { status: "author-demo", poster: "assets/posters/c4d-xppen.jpg", previews: [{ path: "assets/videos-480p/xppen-c4d-480p.mp4", hdPath: "assets/videos-720p/xppen-c4d-720p.mp4", qualitySources: { "480": "assets/videos-480p/xppen-c4d-480p.mp4", "720": "assets/videos-720p/xppen-c4d-720p.mp4", "1080": "assets/videos-1080p/xppen-c4d-1080p.mp4" }, label: { zh: "XPPen 广告完整成片", en: "Full XPPen advertisement" }, duration: "00:15" }], note: { zh: "课程项目成片与 Cinema 4D 源文件已整理；项目使用 XPPen 产品品牌素材。", en: "The course-project film and Cinema 4D source files are organized; the project uses XPPen product-brand assets." } },
     links: []
   },
   {
@@ -92,6 +99,7 @@ window.PORTFOLIO_PROJECTS = [
     year: "2024",
     title: { zh: "Blender 键帽建模", en: "Blender Keycap Modeling" },
     summary: { zh: "以键帽为对象练习 Blender 建模、材质和近景产品渲染。", en: "A Blender keycap study focused on modeling, materials, and close-up product renders." },
+    description: { zh: "一个以键帽为对象的 Blender 建模练习，包含硬表面结构、材质调整、灯光布置和近景产品渲染，用于展示三维建模与视觉表达基础。", en: "A Blender keycap study covering hard-surface form, material adjustment, lighting, and close-up product rendering to demonstrate foundational 3D modeling and visual presentation." },
     role: { zh: "完成键帽模型、材质调整、灯光布置和近景/全景渲染。", en: "Created the keycap model, materials, lighting setup, and close-up/wide renders." },
     tech: ["Blender", "Hard-surface Modeling", "Materials", "Product Render"],
     media: { status: "author-demo", poster: "assets/posters/blender-keycap.png", note: { zh: "包含 Blender 工程文件和多张近景、全景渲染图。", en: "Includes the Blender project file and multiple close-up and wide renders." }, gallery: { title: { zh: "渲染图", en: "Render views" }, note: { zh: "近景与全景产品渲染。", en: "Close-up and wide product renders." }, images: ["assets/renders/blender-keycap/keycap-close-1.png", "assets/renders/blender-keycap/keycap-close-2.png", "assets/renders/blender-keycap/keycap-wide-1.png", "assets/renders/blender-keycap/keycap-wide-2.png", "assets/renders/blender-keycap/keycap-wide-3.png"] } },
@@ -104,6 +112,7 @@ window.PORTFOLIO_PROJECTS = [
     year: "2026",
     title: { zh: "雅思写作工作台", en: "IELTS Writing Studio" },
     summary: { zh: "面向 Task 1/Task 2 训练的桌面工具，支持可切换的 AI 提供商和结构化复习。", en: "A desktop tool for IELTS Task 1/Task 2 practice with switchable AI providers and structured review." },
+    description: { zh: "一个面向雅思 Task 1 和 Task 2 训练的桌面工具。用户可以输入题目和作文，查看结构化反馈、评分维度、修改建议与复习记录，并在本地模型和兼容接口之间切换。", en: "A desktop tool for IELTS Task 1 and Task 2 practice. Users enter prompts and essays, review structured feedback, scoring dimensions, corrections, and revision history, with a switchable local or compatible model provider." },
     role: { zh: "完成桌面界面、分析流程、Provider 抽象、测试和发布。", en: "Built the desktop UI, analysis flow, provider abstraction, tests, and release packaging." },
     tech: ["JavaScript", "Node.js", "Ollama", "Desktop"],
     media: { status: "approved-public", poster: "assets/posters/ielts.jpg", note: { zh: "使用实际工作台界面截图作为封面；公开版本和发布包已整理。", en: "The real writing-studio interface is used as the cover; the public repository and release package are available." } },
@@ -119,9 +128,36 @@ window.PORTFOLIO_PROJECTS = [
     year: "2026",
     title: { zh: "二维目标跟踪滤波研究", en: "Robust 2D Target Smoothing Study" },
     summary: { zh: "用 EMA 和 One Euro 滤波研究二维目标跟踪的平滑、延迟和失败恢复。", en: "A study of smoothing, latency, and recovery in 2D target tracking using EMA and One Euro filters." },
+    description: { zh: "一个围绕二维目标跟踪稳定性的研究型项目。通过公开数据、基线方法、EMA 与 One Euro 滤波以及消融实验，对平滑效果、响应延迟和丢失目标后的恢复表现进行比较。", en: "A research project on the stability of 2D target tracking. It compares public data, baseline methods, EMA and One Euro filters, and ablations across smoothness, response latency, and recovery after target loss." },
     role: { zh: "完成研究协议、指标、消融实验和可复现实验脚本。", en: "Defined the protocol and metrics, ran ablation experiments, and built reproducible scripts." },
     tech: ["Python", "Computer Vision", "Metrics", "Ablation"],
     media: { status: "approved-public", poster: "assets/posters/research.jpg", note: { zh: "使用实际实验结果图作为封面；数据集条款仍需随项目说明保留。", en: "An actual experiment result figure is used as the cover; dataset terms remain part of the project notes." } },
     links: [{ label: { zh: "GitHub", en: "GitHub" }, href: "https://github.com/wang-qingfeng-dev/face-tracking-filter-study" }]
+  },
+  {
+    id: "davinci-color-grade",
+    featured: false,
+    category: "editing",
+    year: "2024",
+    title: { zh: "DaVinci Resolve 调色作品", en: "DaVinci Resolve Color-Grading Study" },
+    summary: { zh: "使用 DaVinci Resolve 完成短视频的色彩校正、色调统一和画面氛围调整。", en: "A short-form video study focused on color correction, tonal consistency, and visual mood in DaVinci Resolve." },
+    description: { zh: "一个以短视频画面为对象的 DaVinci Resolve 调色作品，围绕色彩校正、镜头间色调统一和氛围塑造完成后期处理，并输出完整视频成片。", en: "A DaVinci Resolve color-grading study built around short-form footage. It focuses on color correction, shot-to-shot tonal consistency, and mood shaping before exporting a complete video." },
+    role: { zh: "完成素材整理、基础校色、风格化调色和成片输出。", en: "Organized the footage, completed primary correction, applied a visual grade, and exported the final video." },
+    tech: ["DaVinci Resolve", "Color Grading", "Video Post-production"],
+    media: { status: "author-demo", poster: "assets/posters/davinci-color-grade.jpg", previews: [{ path: "assets/videos-480p/davinci-color-grade-480p.mp4", hdPath: "assets/videos-720p/davinci-color-grade-720p.mp4", qualitySources: { "480": "assets/videos-480p/davinci-color-grade-480p.mp4", "720": "assets/videos-720p/davinci-color-grade-720p.mp4" }, label: { zh: "完整调色成片", en: "Complete graded film" }, duration: "00:59" }], note: { zh: "2024 年影像后期课程作品；网页版本保留原视频声音。", en: "A 2024 post-production course project; the web copy preserves the original audio." } },
+    links: []
+  },
+  {
+    id: "aigc-civilization-reboot",
+    featured: false,
+    category: "editing",
+    year: "2025",
+    title: { zh: "《文明重启》AIGC 短视频", en: "Civilization Reboot · AIGC Short Film" },
+    summary: { zh: "以未来城市与文明想象为主题的 AIGC 影像剪辑作品，结合生成素材、节奏设计和后期合成。", en: "An AIGC short film about future cities and civilization, combining generated visuals, editorial rhythm, and post-production compositing." },
+    description: { zh: "一个以未来城市和文明想象为主题的 AIGC 短视频项目。作品将生成式视觉素材与镜头编排、节奏控制、字幕和声音设计结合，形成一支完整的概念影像。", en: "An AIGC short-film project about future cities and civilization. It combines generated visual material with shot arrangement, pacing, captions, and sound design to form a complete concept film." },
+    role: { zh: "完成主题策划、素材生成与筛选、镜头剪辑、字幕和声音整合。", en: "Shaped the concept, generated and selected visual material, edited the shots, and integrated captions and sound." },
+    tech: ["AIGC", "Video Editing", "Compositing", "Sound Design"],
+    media: { status: "author-demo", poster: "assets/posters/aigc-civilization-reboot.jpg", previews: [{ path: "assets/videos-480p/aigc-civilization-reboot-480p.mp4", hdPath: "assets/videos-720p/aigc-civilization-reboot-720p.mp4", qualitySources: { "480": "assets/videos-480p/aigc-civilization-reboot-480p.mp4", "720": "assets/videos-720p/aigc-civilization-reboot-720p.mp4" }, label: { zh: "完整 AIGC 成片", en: "Complete AIGC short film" }, duration: "04:55" }], note: { zh: "2025 年短视频策划课程作品；海报和网页视频均来自该项目的公开展示素材。", en: "A 2025 short-video planning course project; the poster and web video are presentation assets from the project." } },
+    links: []
   }
 ];

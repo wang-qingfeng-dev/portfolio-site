@@ -7,23 +7,23 @@
       brandName: "王青锋", footerCredit: "© 2026 王青锋", schoolName: "重庆对外经贸学院", navWork: "作品", navAbout: "关于我", navContact: "联系", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "把交互想法做成可运行的世界。", heroLede: "数字媒体技术本科生，专注 Unity 游戏玩法、AR 体验和可验证的交互系统。预计 2027 年 6 月毕业。",
       viewWork: "查看作品", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "从玩法到真实场景",
-      filterAll: "全部", filterUnity: "Unity 作品", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
+      filterAll: "全部", filterUnity: "Unity 作品", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", filterEditing: "影像制作", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
       aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、TouchDesigner 实时装置、C4D/Blender 三维制作、机器人系统集成和计算机视觉研究。",
       factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI", academicTitle: "学业表现", academicAverage: "2025–2026 学年平均成绩：90.39", academicRank: "2025–2026 学年年级第 1 / 92", academicCertificate: "Coursera · Machine Learning Specialization（2026）",
       contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式", contactGithubLabel: "GitHub：", contactEmailLabel: "联系邮箱：",
       footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频", exhibitionTitle: "展览记录",
-      details: "查看项目说明", contribution: "完成内容", openLink: "打开链接"
+      details: "查看项目说明", openLink: "打开链接"
     },
     en: {
       brandName: "Qingfeng Wang", footerCredit: "© 2026 Qingfeng Wang", schoolName: "Chongqing College of International Business and Economics", navWork: "Work", navAbout: "About", navContact: "Contact", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "Turning interaction ideas into runnable worlds.", heroLede: "A Digital Media Technology undergraduate focused on Unity gameplay, AR experiences, and testable interactive systems. Graduating in June 2027.",
       viewWork: "View work", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "From gameplay to real places",
-      filterAll: "All", filterUnity: "Unity work", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
+      filterAll: "All", filterUnity: "Unity work", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", filterEditing: "Moving image", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
       aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, TouchDesigner installations, C4D/Blender 3D production, robot systems integration, and computer-vision research.",
       factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI", academicTitle: "Academic highlights", academicAverage: "2025–2026 annual average: 90.39", academicRank: "Ranked 1st of 92 students in 2025–2026", academicCertificate: "Coursera · Machine Learning Specialization (2026)",
       contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact", contactGithubLabel: "GitHub:", contactEmailLabel: "Email:",
       footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video", exhibitionTitle: "Exhibition record",
-      details: "View project notes", contribution: "Work completed", openLink: "Open link"
+      details: "View project notes", openLink: "Open link"
     }
   };
 
@@ -47,25 +47,102 @@
     if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
     return 0;
   }
-  function addVideoSources(video, preview) {
-    const sources = [preview.path, preview.hdPath].filter(Boolean);
-    let sourceIndex = 0;
-    const appendSource = (sourcePath) => {
+  const QUALITY_LABELS = ["480", "720", "1080"];
+  function mirrorConfig() { return window.PORTFOLIO_MIRROR || {}; }
+  function assetCandidates(path) {
+    if (!path) return [];
+    if (/^(?:https?:)?\/\//.test(path)) return [path];
+    const mirror = mirrorConfig();
+    const base = typeof mirror.baseUrl === "string" ? mirror.baseUrl.replace(/\/+$/, "") : "";
+    const mirrorPath = mirror.enabled && base ? base + "/" + path.replace(/^\/+/, "") : "";
+    return [mirrorPath, path].filter((candidate, index, list) => candidate && list.indexOf(candidate) === index);
+  }
+  function assetUrl(path) { return assetCandidates(path)[0] || path || ""; }
+  function setAssetWithFallback(element, path) {
+    const candidates = assetCandidates(path);
+    let index = 0;
+    if (!candidates.length) return;
+    element.src = candidates[index];
+    if (candidates.length > 1 && mirrorConfig().fallbackToPrimary !== false) {
+      element.addEventListener("error", () => {
+        if (index >= candidates.length - 1) return;
+        index += 1;
+        element.src = candidates[index];
+      });
+    }
+  }
+  function qualitySourcesFor(preview) {
+    return {
+      "480": preview.qualitySources?.["480"] || preview.path || "",
+      "720": preview.qualitySources?.["720"] || preview.hdPath || "",
+      "1080": preview.qualitySources?.["1080"] || preview.fullHdPath || ""
+    };
+  }
+  function availableQualities(video) {
+    return QUALITY_LABELS.filter((quality) => video.__qualitySources?.[quality]);
+  }
+  function chooseVideoQuality(video, requested) {
+    const available = availableQualities(video);
+    if (!available.length) return "";
+    if (requested !== "auto" && available.includes(requested)) return requested;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const fastNetwork = Boolean(connection && !connection.saveData && ["4g", "5g"].includes(connection.effectiveType));
+    return requested === "auto" && fastNetwork ? available[available.length - 1] : available[0];
+  }
+  function lowerQuality(video, quality) {
+    const available = availableQualities(video);
+    const index = available.indexOf(quality);
+    return index > 0 ? available[index - 1] : "";
+  }
+  function setVideoQuality(video, requested, preservePlayback, playbackState) {
+    // 保存切换前的播放位置；源文件加载失败时浏览器可能先把 currentTime 重置为 0。
+    const currentTime = Number.isFinite(playbackState?.currentTime)
+      ? playbackState.currentTime
+      : (Number.isFinite(video.currentTime) ? video.currentTime : 0);
+    const wasPlaying = typeof playbackState?.wasPlaying === "boolean" ? playbackState.wasPlaying : !video.paused;
+    const resolvedQuality = chooseVideoQuality(video, requested);
+    const sourcePath = video.__qualitySources?.[resolvedQuality];
+    if (!sourcePath) return;
+    video.dataset.quality = requested;
+    video.dataset.resolvedQuality = resolvedQuality;
+    const candidates = assetCandidates(sourcePath);
+    let candidateIndex = 0;
+    const token = (video.__qualityLoadToken || 0) + 1;
+    video.__qualityLoadToken = token;
+    const restore = () => {
+      if (token !== video.__qualityLoadToken) return;
+      if (currentTime > 0 && Number.isFinite(video.duration) && video.duration > 0) video.currentTime = Math.min(currentTime, video.duration);
+      if (preservePlayback && wasPlaying) video.play().catch(() => {});
+      video.removeEventListener("loadedmetadata", restore);
+    };
+    const onError = () => {
+      if (token !== video.__qualityLoadToken) return;
+      if (candidateIndex < candidates.length - 1) {
+        candidateIndex += 1;
+        loadCandidate();
+        return;
+      }
+      const fallback = lowerQuality(video, resolvedQuality);
+      if (fallback) setVideoQuality(video, fallback, preservePlayback, { currentTime, wasPlaying });
+    };
+    const loadCandidate = () => {
+      video.replaceChildren();
       const source = document.createElement("source");
-      source.src = sourcePath;
+      source.src = candidates[candidateIndex];
       source.type = "video/mp4";
       video.appendChild(source);
-    };
-    if (sources.length === 0) return;
-    video.addEventListener("error", () => {
-      if (sourceIndex >= sources.length - 1) return;
-      sourceIndex += 1;
-      video.dataset.fallbackTried = "true";
-      video.replaceChildren();
-      appendSource(sources[sourceIndex]);
       video.load();
-    });
-    sources.forEach(appendSource);
+    };
+    video.removeEventListener("error", video.__qualityErrorHandler);
+    video.__qualityErrorHandler = onError;
+    video.addEventListener("error", onError);
+    video.addEventListener("loadedmetadata", restore, { once: true });
+    loadCandidate();
+  }
+  function addVideoSources(video, preview) {
+    video.__qualitySources = qualitySourcesFor(preview);
+    video.dataset.quality = "auto";
+    setVideoQuality(video, "auto", false);
   }
   function configureVideo(video, preload) {
     video.controls = false;
@@ -100,9 +177,6 @@
     const time = document.createElement("span");
     time.className = "video-time";
     time.textContent = "00:00 / " + formatTime(parseDurationLabel(preview?.duration));
-    const volumeLabel = document.createElement("span");
-    volumeLabel.className = "video-volume-label";
-    volumeLabel.textContent = language === "zh" ? "音量" : "Volume";
     const volume = document.createElement("input");
     volume.type = "range";
     volume.className = "video-volume";
@@ -114,10 +188,28 @@
     const muteButton = document.createElement("button");
     muteButton.type = "button";
     muteButton.className = "video-control-button video-mute";
+    const volumeControl = document.createElement("span");
+    volumeControl.className = "video-volume-control";
+    volumeControl.setAttribute("role", "group");
+    volumeControl.setAttribute("aria-label", language === "zh" ? "音量控制" : "Volume control");
+    volumeControl.append(muteButton, volume);
     const fullscreenButton = document.createElement("button");
     fullscreenButton.type = "button";
     fullscreenButton.className = "video-control-button video-fullscreen";
     fullscreenButton.textContent = "⛶";
+    const quality = document.createElement("select");
+    quality.className = "video-quality";
+    quality.setAttribute("aria-label", language === "zh" ? "视频清晰度" : "Video quality");
+    [["auto", language === "zh" ? "自动" : "Auto"], ...availableQualities(video).map((value) => [value, value + "p"])]
+      .forEach(([value, label]) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = label;
+        quality.appendChild(option);
+      });
+    quality.value = video.dataset.quality || "auto";
+    const qualityStatus = document.createElement("span");
+    qualityStatus.className = "video-quality-status";
     const knownDuration = parseDurationLabel(preview?.duration);
     let isScrubbing = false;
     let pendingSeekRatio = null;
@@ -155,11 +247,17 @@
       muteButton.setAttribute("aria-label", video.muted || video.volume === 0 ? (language === "zh" ? "取消静音" : "Unmute") : (language === "zh" ? "静音" : "Mute"));
       const volumePercent = Math.round(video.volume * 100);
       muteButton.title = language === "zh"
-        ? `${video.muted ? "已静音" : `音量 ${volumePercent}%`}，使用滚轮或上下键调节`
-        : `${video.muted ? "Muted" : `Volume ${volumePercent}%`}. Use the wheel or arrow keys to adjust.`;
+        ? `${video.muted ? "已静音" : `音量 ${volumePercent}%`}`
+        : `${video.muted ? "Muted" : `Volume ${volumePercent}%`}`;
       const target = video.closest(".project-visual") || video;
       const expanded = document.fullscreenElement === target || target.classList.contains("is-expanded");
       fullscreenButton.setAttribute("aria-label", expanded ? (language === "zh" ? "退出全屏" : "Exit fullscreen") : (language === "zh" ? "放大视频" : "Fullscreen"));
+      const resolvedQuality = video.dataset.resolvedQuality || availableQualities(video)[0] || "480";
+      const resolvedLabel = resolvedQuality + "p";
+      qualityStatus.textContent = language === "zh" ? `当前 ${resolvedLabel}` : `Now ${resolvedLabel}`;
+      quality.title = language === "zh" ? `当前清晰度：${resolvedLabel}` : `Current quality: ${resolvedLabel}`;
+      quality.value = video.dataset.quality === "auto" ? "auto" : resolvedQuality;
+      quality.setAttribute("aria-label", language === "zh" ? `视频清晰度，当前${resolvedLabel}` : `Video quality, currently ${resolvedLabel}`);
     }
     function pauseOtherVideos() {
       document.querySelectorAll("video").forEach((other) => {
@@ -206,6 +304,10 @@
       if (!isScrubbing) return;
       seekToProgress();
       isScrubbing = false;
+      updateControls();
+    });
+    quality.addEventListener("change", () => {
+      setVideoQuality(video, quality.value, true);
       updateControls();
     });
     volume.addEventListener("input", () => {
@@ -276,7 +378,7 @@
       else target.classList.remove("controls-visible");
       updateControls();
     });
-    controls.append(playButton, progress, time, volumeLabel, volume, muteButton, fullscreenButton);
+    controls.append(playButton, progress, time, volumeControl, quality, qualityStatus, fullscreenButton);
     updateControls();
     return controls;
   }
@@ -287,7 +389,7 @@
     const previews = Array.isArray(media.previews) ? media.previews : [];
     if (previews.length === 0) {
       const image = document.createElement("img");
-      image.src = media.poster;
+      setAssetWithFallback(image, media.poster);
       image.alt = text(project.title);
       image.loading = "lazy";
       visual.appendChild(image);
@@ -295,11 +397,11 @@
       const video = document.createElement("video");
       video.className = "project-video";
       configureVideo(video, "none");
-      video.poster = media.poster;
+      video.poster = assetUrl(media.poster);
       video.setAttribute("aria-label", `${text(project.title)} demo preview`);
       addVideoSources(video, previews[0]);
       const fallback = document.createElement("img");
-      fallback.src = media.poster;
+      setAssetWithFallback(fallback, media.poster);
       fallback.alt = text(project.title);
       video.appendChild(fallback);
       visual.appendChild(video);
@@ -347,7 +449,7 @@
       gallery.className = "exhibition-gallery";
       (exhibition.images || []).forEach((imagePath) => {
         const image = document.createElement("img");
-        image.src = imagePath;
+        setAssetWithFallback(image, imagePath);
         image.alt = `${text(project.title)} · ${text(exhibition.title)}`;
         image.loading = "lazy";
         gallery.appendChild(image);
@@ -374,7 +476,7 @@
     imageGrid.className = "exhibition-gallery";
     gallery.images.forEach((imagePath) => {
       const image = document.createElement("img");
-      image.src = imagePath;
+      setAssetWithFallback(image, imagePath);
       image.alt = `${text(project.title)} · ${text(gallery.title)}`;
       image.loading = "lazy";
       imageGrid.appendChild(image);
@@ -411,9 +513,10 @@
       const summaryToggle = document.createElement("summary");
       summaryToggle.textContent = translations[language].details;
       details.appendChild(summaryToggle);
-      const contribution = document.createElement("p");
-      contribution.innerHTML = `<strong>${translations[language].contribution}：</strong>${text(project.role)}`;
-      details.appendChild(contribution);
+      const description = document.createElement("p");
+      description.className = "project-description";
+      description.textContent = text(project.description || project.summary);
+      details.appendChild(description);
       const mediaNote = document.createElement("p");
       mediaNote.textContent = text(project.media.note);
       details.appendChild(mediaNote);
