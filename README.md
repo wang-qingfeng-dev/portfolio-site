@@ -22,7 +22,7 @@ The two moving-image projects use 2024 DaVinci Resolve footage and a 2025 AIGC s
 
 ## Domestic mirror
 
-`mirror-config.js` supports a domestic OSS/COS copy of the same static files. Set `enabled: true` and provide the HTTPS bucket/CDN root in `baseUrl`; the browser tries that mirror first and falls back to GitHub Pages when an asset is unavailable. The repository does not contain cloud credentials. See [`docs/domestic-mirror.md`](docs/domestic-mirror.md) for the upload and Range/HTTPS checklist.
+`mirror-config.js` supports a domestic OSS/COS copy of the same static files. Set `enabled: true` and provide the HTTPS bucket/CDN root in `baseUrl`; the browser tries that mirror first and falls back to GitHub Pages when an asset is unavailable. The repository does not contain cloud credentials. See [`docs/domestic-mirror.md`](docs/domestic-mirror.md) for the upload and Range/HTTPS checklist, and [`docs/domestic-domain.md`](docs/domestic-domain.md) for domain registration and ICP filing.
 
 ## GitHub Pages
 
