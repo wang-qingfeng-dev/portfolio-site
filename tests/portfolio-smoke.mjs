@@ -141,6 +141,7 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /video\.volume = 1/);
   assert.match(app, /assetCandidates/);
   assert.match(app, /setVideoQuality\(video, fallback, preservePlayback, \{ currentTime, wasPlaying \}\)/);
+  assert.match(app, /video\.src = candidates\[candidateIndex\]/);
 });
 
 test("video quality tiers expose 480p, 720p, and 1080p sources", () => {
@@ -171,6 +172,7 @@ test("video frames stay responsive and preserve the source aspect", () => {
   assert.match(styles, /@media\s*\(min-width:\s*1100px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3/s);
   assert.match(styles, /\.video-volume-control:hover \.video-volume/);
   assert.match(styles, /\.video-volume[^\{]*\{[^\}]*writing-mode:\s*vertical-lr/s);
+  assert.match(styles, /\.video-quality option[^\{]*\{[^\}]*background:\s*var\(--surface-raised\)/s);
 });
 
 test("project years reflect the supplied portfolio timeline", () => {

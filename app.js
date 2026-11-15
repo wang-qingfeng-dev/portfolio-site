@@ -126,11 +126,11 @@
       if (fallback) setVideoQuality(video, fallback, preservePlayback, { currentTime, wasPlaying });
     };
     const loadCandidate = () => {
-      video.replaceChildren();
-      const source = document.createElement("source");
-      source.src = candidates[candidateIndex];
-      source.type = "video/mp4";
-      video.appendChild(source);
+      // Use the media element's direct src so Chromium/Edge reliably rebuilds
+      // the video decoder when a quality or mirror source changes. Replacing
+      // child <source> nodes while playback is active can leave audio/timeupdate
+      // running while the rendered frame remains stuck on the previous poster.
+      video.src = candidates[candidateIndex];
       video.load();
     };
     video.removeEventListener("error", video.__qualityErrorHandler);
