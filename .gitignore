@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+node_modules/
+dist/
+media/*.mov
+media/*.mp4
+assets/video-previews/*.mov
+assets/video-previews/*.mp4
+*.zip
+assets/video-previews/
+assets/videos-hd/
+review-frames/

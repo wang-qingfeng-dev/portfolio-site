@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Disaster education</title><desc id="desc">A geometric campus silhouette with a signal line.</desc>
+  <defs><linearGradient id="g" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#12252b"/><stop offset="1" stop-color="#294953"/></linearGradient></defs>
+  <rect width="1280" height="720" fill="url(#g)"/><path d="M180 560V280l110-80 110 80v280M400 560V220l120-90 120 90v340M640 560V310l95-70 95 70v250" fill="none" stroke="#8ac8df" stroke-width="12" opacity=".65"/><path d="M140 610h940" stroke="#ffb86b" stroke-width="5"/><circle cx="975" cy="180" r="40" fill="none" stroke="#ffb86b" stroke-width="4"/><path d="M975 115v-35M975 245v35M910 180h-35M1040 180h35" stroke="#ffb86b" stroke-width="4"/><text x="72" y="625" fill="#edf3f5" font-family="Segoe UI, sans-serif" font-size="40" font-weight="700">向生而行</text><text x="72" y="668" fill="#a8b4ba" font-family="Segoe UI, sans-serif" font-size="22">Unity 6 · Disaster education</text>
+</svg>

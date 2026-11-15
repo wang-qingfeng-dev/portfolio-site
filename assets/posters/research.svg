@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Target smoothing study</title><desc id="desc">A plotted path with filtered and raw lines.</desc>
+  <rect width="1280" height="720" fill="#101a20"/><path d="M120 520h980M160 100v420" stroke="#71818a" stroke-width="3"/><path d="M170 450c90-150 125 100 220-60s145 70 235-100 155 40 255-120 130 40 210-90" fill="none" stroke="#8ac8df" stroke-width="6" opacity=".55"/><path d="M170 470c100-80 140-20 235-68s130-25 220-56 145-20 250-62 145-2 215-52" fill="none" stroke="#ffb86b" stroke-width="8"/><text x="72" y="620" fill="#edf3f5" font-family="Segoe UI, sans-serif" font-size="40" font-weight="700">TRACKING STUDY</text><text x="72" y="666" fill="#a8b4ba" font-family="Segoe UI, sans-serif" font-size="22">EMA · One Euro · Ablation</text>
+</svg>

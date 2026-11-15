@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="王青锋的 Unity、AR、交互与软件工程作品集。">
+    <title>Qingfeng Wang · Interactive Systems Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Qingfeng Wang portfolio home">
+        <span class="brand-mark">QW</span>
+        <span class="brand-text" data-i18n="brandName">王青锋</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#work" data-i18n="navWork">作品</a>
+        <a href="#about" data-i18n="navAbout">关于我</a>
+        <a href="#contact" data-i18n="navContact">联系</a>
+      </nav>
+      <button class="language-toggle" id="languageToggle" type="button" aria-pressed="false">EN</button>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="eyebrow">UNITY · AR · INTERACTION</p>
+          <h1 id="heroTitle" data-i18n="heroTitle">把交互想法做成可运行的世界。</h1>
+          <p class="hero-lede" data-i18n="heroLede">数字媒体技术本科生，专注 Unity 游戏玩法、AR 体验和可验证的交互系统。预计 2027 年 6 月毕业。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#work" data-i18n="viewWork">查看作品</a>
+            <a class="button button-quiet" href="https://github.com/wang-qingfeng-dev" target="_blank" rel="noreferrer" data-i18n="github">GitHub</a>
+          </div>
+        </div>
+        <div class="hero-signal" aria-label="Portfolio focus">
+          <div class="signal-orbit orbit-one"></div>
+          <div class="signal-orbit orbit-two"></div>
+          <div class="signal-core">01</div>
+          <p><span data-i18n="signalLabel">Focus</span><strong data-i18n="signalValue">Interactive 3D</strong></p>
+        </div>
+      </section>
+
+      <section class="work-section" id="work" aria-labelledby="workTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="selectedWork">SELECTED WORK</p>
+            <h2 id="workTitle" data-i18n="workTitle">从玩法到真实场景</h2>
+          </div>
+          <p class="section-note" data-i18n="workNote">先看 Unity 项目，再看系统与研究项目。</p>
+        </div>
+        <div class="filter-row" role="group" aria-label="Project filters">
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">全部</button>
+          <button class="filter-button" type="button" data-filter="unity" aria-pressed="false">Unity</button>
+          <button class="filter-button" type="button" data-filter="systems" aria-pressed="false" data-i18n="filterSystems">系统</button>
+          <span class="filter-status" id="filterStatus" role="status" aria-live="polite"></span>
+        </div>
+        <div class="project-grid" id="projectGrid"></div>
+      </section>
+
+      <section class="about-section" id="about" aria-labelledby="aboutTitle">
+        <div>
+          <p class="eyebrow" data-i18n="aboutEyebrow">ABOUT</p>
+          <h2 id="aboutTitle" data-i18n="aboutTitle">我关心的不只是画面。</h2>
+        </div>
+        <div class="about-copy">
+          <p data-i18n="aboutText">我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、AR、机器人系统集成和软件工程。</p>
+          <dl class="profile-facts">
+            <div><dt data-i18n="factSchool">学校</dt><dd data-i18n="schoolName">重庆对外经贸学院</dd></div>
+            <div><dt data-i18n="factMajor">专业</dt><dd data-i18n="major">数字媒体技术</dd></div>
+            <div><dt data-i18n="factGrad">毕业时间</dt><dd>2027.06</dd></div>
+            <div><dt data-i18n="factInterest">方向</dt><dd data-i18n="interest">Unity / AR / HCI</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contactTitle">
+        <div>
+          <p class="eyebrow" data-i18n="contactEyebrow">CONTACT</p>
+          <h2 id="contactTitle" data-i18n="contactTitle">一起把想法做出来。</h2>
+        </div>
+        <div class="contact-copy">
+          <p data-i18n="contactText">欢迎交流 Unity 实习、交互媒体项目和加拿大计算机硕士申请相关合作。</p>
+          <div class="contact-links">
+            <a href="https://github.com/wang-qingfeng-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a id="contactEmail" href="mailto:iswangjr@foxmail.com">iswangjr@foxmail.com ↗</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-i18n="footerCredit">© 2026 王青锋</span>
+      <span data-i18n="footerNote">公开页面只展示已审核的项目证据。</span>
+    </footer>
+
+    <script src="content.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

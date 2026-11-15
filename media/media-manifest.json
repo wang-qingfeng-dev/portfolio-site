@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "projectId": "3dshoot",
+      "filename": "3D射击游戏demo展示.mov",
+      "status": "author-demo",
+      "publicPath": "assets/videos/3dshoot-full.mp4",
+      "duration": "01:12",
+      "note": "Full H.264 operation demo."
+    },
+    {
+      "projectId": "disaster-education",
+      "filename": "向生而行演示.mov",
+      "status": "author-demo",
+      "publicPath": "assets/videos/live-onward-full.mp4",
+      "duration": "16:37",
+      "note": "Full H.264 operation demo."
+    },
+    {
+      "projectId": "disaster-education",
+      "filename": "科技馆展览游玩演示.mov",
+      "status": "author-demo",
+      "publicPath": "assets/videos/science-museum-full.mp4",
+      "duration": "03:11",
+      "note": "Full H.264 operation demo."
+    },
+    {
+      "projectId": "ar-unity-model",
+      "filename": "实体交互视频.mp4",
+      "status": "author-demo",
+      "publicPath": "assets/videos/ar-full.mp4",
+      "duration": "02:44",
+      "note": "Full H.264 AR interaction demo."
+    },
+    {
+      "projectId": "robot",
+      "filename": "小智机器人展示视频.mp4",
+      "status": "author-demo",
+      "publicPath": "assets/videos/robot-full.mp4",
+      "duration": "01:02",
+      "note": "Full H.264 interactive-device demo."
+    }
+  ]
+}

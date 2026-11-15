@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Third-person zombie shooter</title><desc id="desc">Amber reticle over a dark blue arena.</desc>
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#101c28"/><stop offset="1" stop-color="#61482e"/></linearGradient></defs>
+  <rect width="1280" height="720" fill="url(#g)"/><circle cx="900" cy="355" r="110" fill="none" stroke="#ffb86b" stroke-width="4" opacity=".85"/><path d="M900 210v290M755 355h290" stroke="#ffb86b" stroke-width="3" opacity=".55"/><text x="72" y="590" fill="#edf3f5" font-family="Segoe UI, sans-serif" font-size="42" font-weight="700">3D SHOOT</text><text x="72" y="638" fill="#a8b4ba" font-family="Segoe UI, sans-serif" font-size="22">Unity · C# · NavMesh</text>
+</svg>
