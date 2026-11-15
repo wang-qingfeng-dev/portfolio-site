@@ -9,7 +9,7 @@
       viewWork: "查看作品", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "从玩法到真实场景",
       filterAll: "全部", filterUnity: "Unity 作品", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
       aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、TouchDesigner 实时装置、C4D/Blender 三维制作、机器人系统集成和计算机视觉研究。",
-      factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI",
+      factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI", academicTitle: "学业表现", academicAverage: "2025–2026 学年平均成绩：90.39", academicCertificate: "Coursera · Machine Learning Specialization（2026）",
       contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式", contactGithubLabel: "GitHub：", contactEmailLabel: "联系邮箱：",
       footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频", exhibitionTitle: "展览记录",
       details: "查看项目说明", contribution: "完成内容", openLink: "打开链接"
@@ -20,7 +20,7 @@
       viewWork: "View work", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "From gameplay to real places",
       filterAll: "All", filterUnity: "Unity work", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
       aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, TouchDesigner installations, C4D/Blender 3D production, robot systems integration, and computer-vision research.",
-      factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI",
+      factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI", academicTitle: "Academic highlights", academicAverage: "2025–2026 annual average: 90.39", academicCertificate: "Coursera · Machine Learning Specialization (2026)",
       contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact", contactGithubLabel: "GitHub:", contactEmailLabel: "Email:",
       footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video", exhibitionTitle: "Exhibition record",
       details: "View project notes", contribution: "Work completed", openLink: "Open link"
