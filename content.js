@@ -82,7 +82,7 @@ window.PORTFOLIO_PROJECTS = [
     summary: { zh: "使用 Cinema 4D 完成数位笔产品的建模、材质、镜头动画和广告成片。", en: "A Cinema 4D product advertisement covering modeling, materials, camera animation, and final editing." },
     role: { zh: "完成产品模型、材质、镜头动画、灯光渲染和广告成片制作。", en: "Created the product models, materials, camera animation, lighting, rendering, and final advertisement edit." },
     tech: ["Cinema 4D", "Product Modeling", "Animation", "Rendering"],
-    media: { status: "author-demo", poster: "assets/posters/c4d-xppen.jpg", previews: [{ path: "assets/videos/xppen-c4d-full.mp4", label: { zh: "XPPen 广告完整成片", en: "Full XPPen advertisement" }, duration: "" }], note: { zh: "课程项目成片与 Cinema 4D 源文件已整理；项目使用 XPPen 产品品牌素材。", en: "The course-project film and Cinema 4D source files are organized; the project uses XPPen product-brand assets." } },
+    media: { status: "author-demo", poster: "assets/posters/c4d-xppen.jpg", previews: [{ path: "assets/videos/xppen-c4d-full.mp4", label: { zh: "XPPen 广告完整成片", en: "Full XPPen advertisement" }, duration: "00:15" }], note: { zh: "课程项目成片与 Cinema 4D 源文件已整理；项目使用 XPPen 产品品牌素材。", en: "The course-project film and Cinema 4D source files are organized; the project uses XPPen product-brand assets." } },
     links: []
   },
   {
