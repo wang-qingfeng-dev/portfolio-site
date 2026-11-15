@@ -142,7 +142,7 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /assetCandidates/);
   assert.match(app, /setVideoQuality\(video, fallback, preservePlayback, \{ currentTime, wasPlaying \}\)/);
   assert.match(app, /video\.src = candidates\[candidateIndex\]/);
-  assert.match(app, /isGitHubPagesWithout1080/);
+  assert.match(app, /canExpose1080/);
   assert.match(app, /setVideoQuality\(video, "auto", false, undefined, false\)/);
   assert.match(app, /if \(loadNow\) video\.load\(\)/);
 });
@@ -157,6 +157,37 @@ test("video quality tiers expose 480p, 720p, and 1080p sources", () => {
   assert.ok(previews.some((preview) => preview.qualitySources?.["480"]));
   assert.ok(previews.some((preview) => preview.qualitySources?.["720"]));
   assert.ok(previews.some((preview) => preview.qualitySources?.["1080"]));
+});
+
+test("public video playback never offers or selects a quality below 720p", () => {
+  assert.match(app, /const MIN_PUBLIC_QUALITY = \"720\"/);
+  assert.match(app, /QUALITY_RANK\[quality\] >= QUALITY_RANK\[MIN_PUBLIC_QUALITY\]/);
+  assert.match(app, /return available\[available\.length - 1\]/);
+  const previews = projects.flatMap((project) => project.media.previews ?? []);
+  for (const preview of previews) {
+    assert.ok(
+      preview.qualitySources?.["720"] || preview.qualitySources?.["1080"],
+      `missing public HD source for ${preview.label?.zh || "video"}`
+    );
+  }
+});
+
+test("public playback defaults to the highest available quality and keeps 720p as the floor", () => {
+  assert.match(app, /MIN_PUBLIC_QUALITY/);
+  assert.match(app, /configured\.filter\(\(quality\) => QUALITY_RANK\[quality\] >= QUALITY_RANK\[MIN_PUBLIC_QUALITY\]\)/);
+  assert.match(app, /return available\[available\.length - 1\]/);
+  const liveOnward = projects.find((project) => project.id === "disaster-education");
+  const preview = liveOnward?.media.previews?.[0];
+  assert.ok(preview?.qualitySources?.["720"], "Live Onward must expose a 720p source");
+  assert.match(preview?.hdPath || "", /^assets\/videos-(?:720p|hd)\/[^/]+\.mp4$/);
+});
+
+test("small original 1080p files are tracked for public playback", () => {
+  for (const file of ["3dshoot-1080p.mp4", "robot-1080p.mp4", "xppen-c4d-1080p.mp4"]) {
+    assert.ok(fs.existsSync(path.join(root, "assets", "videos-1080p", file)), file);
+  }
+  const gitignore = fs.readFileSync(path.join(root, ".gitignore"), "utf8");
+  assert.doesNotMatch(gitignore, /^assets\/videos-1080p\/$/m);
 });
 
 test("mirror configuration supports a domestic asset base with primary fallback", () => {

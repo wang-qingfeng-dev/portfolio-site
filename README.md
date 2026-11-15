@@ -16,7 +16,7 @@ The site has no build step and no API key. Project copy lives in `content.js`; l
 
 ## Media policy
 
-The public bundle uses real project screenshots and compressed full-length H.264 demonstration videos. Original high-bitrate recordings stay outside the repository; see `media/media-manifest.json` and `media/README.md` for the web-copy mapping. Video cards offer an automatic choice plus the available 480p, 720p, and 1080p sources; a failed high-quality source falls back without losing the current playback position.
+The public bundle uses real project screenshots and full-length H.264 demonstration videos. Automatic playback starts at the highest available tier and keeps 720p as the public floor; 480p is retained only as an internal failure fallback. Original high-bitrate recordings stay outside the repository where GitHub's file limit requires it; see `media/media-manifest.json`, `media/README.md`, and `docs/video-quality-availability.md` for the exact mapping. A failed high-quality source falls back without losing the current playback position.
 
 The two moving-image projects use 2024 DaVinci Resolve footage and a 2025 AIGC short-film encode. The site labels them as course projects and does not claim ownership of third-party brand or generated assets beyond the work described.
 

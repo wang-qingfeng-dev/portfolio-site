@@ -48,6 +48,8 @@
     return 0;
   }
   const QUALITY_LABELS = ["480", "720", "1080"];
+  const QUALITY_RANK = Object.freeze({ "480": 480, "720": 720, "1080": 1080 });
+  const MIN_PUBLIC_QUALITY = "720";
   function mirrorConfig() { return window.PORTFOLIO_MIRROR || {}; }
   function assetCandidates(path) {
     if (!path) return [];
@@ -74,29 +76,35 @@
   function qualitySourcesFor(preview) {
     const mirror = mirrorConfig();
     const host = typeof window.location?.hostname === "string" ? window.location.hostname : "";
-    // GitHub Pages does not carry the ignored original-resolution files. Keep
-    // the public selector honest until a mirror has uploaded 1080p assets;
-    // local previews can still exercise the files in assets/videos-1080p.
-    const isGitHubPagesWithout1080 = /(?:^|\.)github\.io$/i.test(host) && !(mirror.enabled && mirror.allow1080 === true);
+    // Only expose a 1080p source on GitHub Pages when that exact file is
+    // tracked by the public repository or the configured mirror provides it.
+    // Large originals stay hidden until they are uploaded to a release/CDN.
+    const isGitHubPages = /(?:^|\.)github\.io$/i.test(host);
+    const canExpose1080 = !isGitHubPages || preview.public1080 === true || (mirror.enabled && mirror.allow1080 === true);
     return {
       "480": preview.qualitySources?.["480"] || preview.path || "",
       "720": preview.qualitySources?.["720"] || preview.hdPath || "",
-      "1080": isGitHubPagesWithout1080 ? "" : (preview.qualitySources?.["1080"] || preview.fullHdPath || "")
+      "1080": canExpose1080 ? (preview.qualitySources?.["1080"] || preview.fullHdPath || "") : ""
     };
   }
-  function availableQualities(video) {
+  function configuredQualities(video) {
     return QUALITY_LABELS.filter((quality) => video.__qualitySources?.[quality]);
+  }
+  function availableQualities(video) {
+    const configured = configuredQualities(video);
+    const publicQualities = configured.filter((quality) => QUALITY_RANK[quality] >= QUALITY_RANK[MIN_PUBLIC_QUALITY]);
+    return publicQualities.length ? publicQualities : configured;
   }
   function chooseVideoQuality(video, requested) {
     const available = availableQualities(video);
     if (!available.length) return "";
     if (requested !== "auto" && available.includes(requested)) return requested;
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const fastNetwork = Boolean(connection && !connection.saveData && ["4g", "5g"].includes(connection.effectiveType));
-    return requested === "auto" && fastNetwork ? available[available.length - 1] : available[0];
+    // Auto always starts at the highest available tier. Users can manually
+    // choose a lower available tier if their connection needs it.
+    return available[available.length - 1];
   }
   function lowerQuality(video, quality) {
-    const available = availableQualities(video);
+    const available = configuredQualities(video);
     const index = available.indexOf(quality);
     return index > 0 ? available[index - 1] : "";
   }
