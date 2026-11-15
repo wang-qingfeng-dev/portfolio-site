@@ -100,7 +100,7 @@
     const index = available.indexOf(quality);
     return index > 0 ? available[index - 1] : "";
   }
-  function setVideoQuality(video, requested, preservePlayback, playbackState) {
+  function setVideoQuality(video, requested, preservePlayback, playbackState, loadNow = true) {
     // 保存切换前的播放位置；源文件加载失败时浏览器可能先把 currentTime 重置为 0。
     const currentTime = Number.isFinite(playbackState?.currentTime)
       ? playbackState.currentTime
@@ -137,7 +137,7 @@
       // child <source> nodes while playback is active can leave audio/timeupdate
       // running while the rendered frame remains stuck on the previous poster.
       video.src = candidates[candidateIndex];
-      video.load();
+      if (loadNow) video.load();
     };
     video.removeEventListener("error", video.__qualityErrorHandler);
     video.__qualityErrorHandler = onError;
@@ -148,7 +148,9 @@
   function addVideoSources(video, preview) {
     video.__qualitySources = qualitySourcesFor(preview);
     video.dataset.quality = "auto";
-    setVideoQuality(video, "auto", false);
+    // Set the initial source without starting network work for every card.
+    // The first play or an explicit quality choice calls load() on demand.
+    setVideoQuality(video, "auto", false, undefined, false);
   }
   function configureVideo(video, preload) {
     video.controls = false;

@@ -143,6 +143,8 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /setVideoQuality\(video, fallback, preservePlayback, \{ currentTime, wasPlaying \}\)/);
   assert.match(app, /video\.src = candidates\[candidateIndex\]/);
   assert.match(app, /isGitHubPagesWithout1080/);
+  assert.match(app, /setVideoQuality\(video, "auto", false, undefined, false\)/);
+  assert.match(app, /if \(loadNow\) video\.load\(\)/);
 });
 
 test("video quality tiers expose 480p, 720p, and 1080p sources", () => {
