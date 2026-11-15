@@ -20,7 +20,7 @@
 4. 按[阿里云 OSS 自定义域名文档](https://help.aliyun.com/zh/oss/user-guide/access-buckets-via-custom-domain-names)绑定备案域名，并配置 HTTPS。若使用 CDN，开启 Range 请求，视频拖动进度条才会稳定。
 5. 将仓库根目录和 `assets/` 上传到 Bucket，使以下地址可访问：
 
-   `https://你的域名/assets/videos-480p/3dshoot-480p.mp4`
+   `https://你的域名/assets/videos-hd/3dshoot-hd.mp4`
 
 6. 修改根目录 `mirror-config.js`：
 
@@ -32,7 +32,7 @@
    });
    ```
 
-7. 推送后分别测试首页、封面和视频的 480p/720p 选择、拖动进度条，以及镜像失效时是否能回退到 GitHub Pages。
+7. 推送后分别测试首页、封面和视频的 720p/1080p 选择、拖动进度条，以及镜像失效时是否能回退到 GitHub Pages。
 
 ## 腾讯云替代方案
 

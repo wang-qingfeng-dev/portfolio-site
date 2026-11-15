@@ -12,6 +12,7 @@
     { "projectId": "disaster-education", "filename": "live-onward-1080p.mp4", "width": 1920, "height": 1080, "bytes": 1319845399 },
     { "projectId": "ar-unity-model", "filename": "ar-1080p.mp4", "width": 1920, "height": 1080, "bytes": 159435013 },
     { "projectId": "robot", "filename": "robot-1080p.mp4", "width": 1080, "height": 1920, "bytes": 70889072 },
-    { "projectId": "xppen-c4d", "filename": "xppen-c4d-1080p.mp4", "width": 1920, "height": 1080, "bytes": 7823477 }
+    { "projectId": "xppen-c4d", "filename": "xppen-c4d-1080p.mp4", "width": 1920, "height": 1080, "bytes": 7823477 },
+    { "projectId": "aigc-civilization-reboot", "filename": "aigc-civilization-reboot-1080p.mp4", "width": 1920, "height": 1080, "bytes": 172794452 }
   ]
 }

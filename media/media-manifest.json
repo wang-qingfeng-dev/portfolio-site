@@ -14,6 +14,7 @@
       "filename": "向生而行演示.mov",
       "status": "author-demo",
       "publicPath": "assets/videos-480p/live-onward-480p.mp4",
+      "hdPath": "assets/videos-720p/live-onward-720p.mp4",
       "duration": "16:37",
       "note": "Full H.264 operation demo."
     },

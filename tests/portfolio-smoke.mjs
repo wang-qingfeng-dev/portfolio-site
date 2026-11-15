@@ -147,7 +147,7 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /if \(loadNow\) video\.load\(\)/);
 });
 
-test("video quality tiers expose 480p, 720p, and 1080p sources", () => {
+test("video quality data retains source tiers while the public selector starts at 720p", () => {
   assert.match(app, /qualitySources/);
   assert.match(app, /480/);
   assert.match(app, /720/);
@@ -160,7 +160,7 @@ test("video quality tiers expose 480p, 720p, and 1080p sources", () => {
 });
 
 test("public video playback never offers or selects a quality below 720p", () => {
-  assert.match(app, /const MIN_PUBLIC_QUALITY = \"720\"/);
+  assert.match(app, /const QUALITY_LABELS = \[\"720\", \"1080\"\]/);
   assert.match(app, /QUALITY_RANK\[quality\] >= QUALITY_RANK\[MIN_PUBLIC_QUALITY\]/);
   assert.match(app, /return available\[available\.length - 1\]/);
   const previews = projects.flatMap((project) => project.media.previews ?? []);
@@ -174,7 +174,8 @@ test("public video playback never offers or selects a quality below 720p", () =>
 
 test("public playback defaults to the highest available quality and keeps 720p as the floor", () => {
   assert.match(app, /MIN_PUBLIC_QUALITY/);
-  assert.match(app, /configured\.filter\(\(quality\) => QUALITY_RANK\[quality\] >= QUALITY_RANK\[MIN_PUBLIC_QUALITY\]\)/);
+  assert.match(app, /const QUALITY_LABELS = \[\"720\", \"1080\"\]/);
+  assert.match(app, /const ALL_QUALITY_LABELS = \[\"480\", \"720\", \"1080\"\]/);
   assert.match(app, /return available\[available\.length - 1\]/);
   const liveOnward = projects.find((project) => project.id === "disaster-education");
   const preview = liveOnward?.media.previews?.[0];
@@ -185,6 +186,9 @@ test("public playback defaults to the highest available quality and keeps 720p a
 test("small original 1080p files are tracked for public playback", () => {
   for (const file of ["3dshoot-1080p.mp4", "robot-1080p.mp4", "xppen-c4d-1080p.mp4"]) {
     assert.ok(fs.existsSync(path.join(root, "assets", "videos-1080p", file)), file);
+  }
+  for (const id of ["3dshoot", "robot", "xppen-c4d"]) {
+    assert.equal(projects.find((project) => project.id === id)?.media.previews?.[0]?.public1080, true, id);
   }
   const gitignore = fs.readFileSync(path.join(root, ".gitignore"), "utf8");
   assert.doesNotMatch(gitignore, /^assets\/videos-1080p\/$/m);

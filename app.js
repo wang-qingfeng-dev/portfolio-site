@@ -47,7 +47,10 @@
     if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
     return 0;
   }
-  const QUALITY_LABELS = ["480", "720", "1080"];
+  // Public playback intentionally starts at 720p. 480p files remain in the
+  // repository as legacy fallbacks, but they are never offered to viewers.
+  const QUALITY_LABELS = ["720", "1080"];
+  const ALL_QUALITY_LABELS = ["480", "720", "1080"];
   const QUALITY_RANK = Object.freeze({ "480": 480, "720": 720, "1080": 1080 });
   const MIN_PUBLIC_QUALITY = "720";
   function mirrorConfig() { return window.PORTFOLIO_MIRROR || {}; }
@@ -88,12 +91,11 @@
     };
   }
   function configuredQualities(video) {
-    return QUALITY_LABELS.filter((quality) => video.__qualitySources?.[quality]);
+    return ALL_QUALITY_LABELS.filter((quality) => video.__qualitySources?.[quality]);
   }
   function availableQualities(video) {
     const configured = configuredQualities(video);
-    const publicQualities = configured.filter((quality) => QUALITY_RANK[quality] >= QUALITY_RANK[MIN_PUBLIC_QUALITY]);
-    return publicQualities.length ? publicQualities : configured;
+    return configured.filter((quality) => QUALITY_RANK[quality] >= QUALITY_RANK[MIN_PUBLIC_QUALITY]);
   }
   function chooseVideoQuality(video, requested) {
     const available = availableQualities(video);
@@ -117,7 +119,7 @@
     const resolvedQuality = chooseVideoQuality(video, requested);
     const sourcePath = video.__qualitySources?.[resolvedQuality];
     if (!sourcePath) return;
-    video.dataset.quality = requested;
+    video.dataset.quality = requested === "auto" ? "auto" : resolvedQuality;
     video.dataset.resolvedQuality = resolvedQuality;
     const candidates = assetCandidates(sourcePath);
     let candidateIndex = 0;
