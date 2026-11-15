@@ -7,10 +7,10 @@
       brandName: "王青锋", footerCredit: "© 2026 王青锋", schoolName: "重庆对外经贸学院", navWork: "作品", navAbout: "关于我", navContact: "联系", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "把交互想法做成可运行的世界。", heroLede: "数字媒体技术本科生，专注 Unity 游戏玩法、AR 体验和可验证的交互系统。预计 2027 年 6 月毕业。",
       viewWork: "查看作品", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "从玩法到真实场景",
-      workNote: "按 Unity 作品、工程、交互装置和建模动画方向浏览。", filterAll: "全部", filterUnity: "Unity 作品", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
+      filterAll: "全部", filterUnity: "Unity 作品", filterEngineering: "工程项目", filterInteractive: "交互装置", filterModeling: "建模与动画", aboutEyebrow: "ABOUT", aboutTitle: "我关心的不只是画面。",
       aboutText: "我喜欢把一个模糊的体验目标拆成输入、状态、反馈和可测试的运行流程。作品覆盖 Unity 游戏玩法、灾害教育交互、TouchDesigner 实时装置、C4D/Blender 三维制作、机器人系统集成和计算机视觉研究。",
       factSchool: "学校", factMajor: "专业", factGrad: "毕业时间", factInterest: "方向", major: "数字媒体技术", interest: "Unity / AR / HCI",
-      contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式",
+      contactEyebrow: "链接与联系方式", contactTitle: "GitHub 与联系方式", contactGithubLabel: "GitHub：", contactEmailLabel: "联系邮箱：",
       footerNote: "公开页面展示项目说明和完整演示。", mediaPublic: "演示视频", mediaPending: "演示视频", mediaPrivate: "演示视频", exhibitionTitle: "展览记录",
       details: "查看项目说明", contribution: "完成内容", openLink: "打开链接"
     },
@@ -18,10 +18,10 @@
       brandName: "Qingfeng Wang", footerCredit: "© 2026 Qingfeng Wang", schoolName: "Chongqing College of International Business and Economics", navWork: "Work", navAbout: "About", navContact: "Contact", eyebrow: "UNITY · AR · 3D · INTERACTION",
       heroTitle: "Turning interaction ideas into runnable worlds.", heroLede: "A Digital Media Technology undergraduate focused on Unity gameplay, AR experiences, and testable interactive systems. Graduating in June 2027.",
       viewWork: "View work", github: "GitHub", signalLabel: "Focus", signalValue: "Interactive 3D", selectedWork: "SELECTED WORK", workTitle: "From gameplay to real places",
-      workNote: "Browse by Unity work, engineering, interactive installations, and 3D production.", filterAll: "All", filterUnity: "Unity work", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
+      filterAll: "All", filterUnity: "Unity work", filterEngineering: "Engineering projects", filterInteractive: "Interactive installations", filterModeling: "Modeling & animation", aboutEyebrow: "ABOUT", aboutTitle: "The frame is only the beginning.",
       aboutText: "I like breaking an ambiguous experience goal into inputs, states, feedback, and testable runtime flows. My work spans Unity gameplay, disaster-education interaction, TouchDesigner installations, C4D/Blender 3D production, robot systems integration, and computer-vision research.",
       factSchool: "School", factMajor: "Major", factGrad: "Graduation", factInterest: "Focus", major: "Digital Media Technology", interest: "Unity / AR / HCI",
-      contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact",
+      contactEyebrow: "LINKS & CONTACT", contactTitle: "GitHub and contact", contactGithubLabel: "GitHub:", contactEmailLabel: "Email:",
       footerNote: "The public page presents project notes and full demos.", mediaPublic: "Demo video", mediaPending: "Demo video", mediaPrivate: "Demo video", exhibitionTitle: "Exhibition record",
       details: "View project notes", contribution: "Work completed", openLink: "Open link"
     }
@@ -112,6 +112,7 @@
     fullscreenButton.className = "video-control-button video-fullscreen";
     fullscreenButton.textContent = "⛶";
     let isScrubbing = false;
+    let nativeRangeInputSeen = false;
     let hideTimer = null;
     const target = video.closest(".project-visual") || video;
 
@@ -139,9 +140,16 @@
       const expanded = document.fullscreenElement === target || target.classList.contains("is-expanded");
       fullscreenButton.setAttribute("aria-label", expanded ? (language === "zh" ? "退出全屏" : "Exit fullscreen") : (language === "zh" ? "放大视频" : "Fullscreen"));
     }
+    function pauseOtherVideos() {
+      document.querySelectorAll("video").forEach((other) => {
+        if (other !== video) other.pause();
+      });
+    }
     playButton.addEventListener("click", () => {
-      if (video.paused) video.play().catch(() => {});
-      else video.pause();
+      if (video.paused) {
+        pauseOtherVideos();
+        video.play().catch(() => {});
+      } else video.pause();
     });
     function seekToProgress() {
       if (!Number.isFinite(video.duration) || video.duration <= 0) return;
@@ -161,14 +169,17 @@
       if (!Number.isFinite(video.duration) || video.duration <= 0 || rect.width <= 0) return;
       const offsetX = Number(event.offsetX);
       const pointerOffset = event.clientX - rect.left;
-      const localX = event.type === "pointerdown" && Number.isFinite(offsetX) && offsetX >= 0 && offsetX <= rect.width
+      const localX = (event.type === "pointerdown" || event.type === "click") && Number.isFinite(offsetX) && offsetX >= 0 && offsetX <= rect.width
         ? offsetX
         : pointerOffset;
       const ratio = Math.max(0, Math.min(1, localX / rect.width));
       progress.value = String(ratio * 100);
       seekToProgress();
     }
-    progress.addEventListener("input", seekToProgress);
+    progress.addEventListener("input", () => {
+      nativeRangeInputSeen = true;
+      seekToProgress();
+    });
     progress.addEventListener("change", () => {
       seekToProgress();
       isScrubbing = false;
@@ -176,14 +187,13 @@
     });
     progress.addEventListener("pointerdown", (event) => {
       isScrubbing = true;
+      nativeRangeInputSeen = false;
       progress.setPointerCapture?.(event.pointerId);
-      setProgressFromPointer(event);
     });
     progress.addEventListener("pointermove", (event) => {
-      if (isScrubbing) setProgressFromPointer(event);
+      if (isScrubbing && !nativeRangeInputSeen) setProgressFromPointer(event);
     });
     progress.addEventListener("pointerup", (event) => {
-      setProgressFromPointer(event);
       isScrubbing = false;
       progress.releasePointerCapture?.(event.pointerId);
       window.setTimeout(() => {
@@ -192,7 +202,8 @@
       }, 0);
     });
     progress.addEventListener("pointercancel", () => { isScrubbing = false; updateControls(); });
-    progress.addEventListener("click", () => {
+    progress.addEventListener("click", (event) => {
+      if (!nativeRangeInputSeen) setProgressFromPointer(event);
       seekToProgress();
       window.setTimeout(updateControls, 0);
     });
@@ -248,6 +259,7 @@
         updateControls();
       }
     });
+    video.addEventListener("play", pauseOtherVideos);
     ["loadedmetadata", "durationchange", "timeupdate", "play", "pause", "ended", "volumechange"].forEach((eventName) => video.addEventListener(eventName, updateControls));
     target.addEventListener("pointermove", showTransientControls);
     target.addEventListener("focusin", showTransientControls);

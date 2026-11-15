@@ -9,7 +9,7 @@
   --accent: #ffb86b;
   --accent-cool: #8ac8df;
   --danger: #f3a6a6;
-  --max: 1180px;
+  --max: 1320px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -74,7 +74,8 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; l
 .hero-signal p { position: absolute; right: .5rem; bottom: .4rem; display: grid; gap: .15rem; margin: 0; color: var(--muted); font-size: .75rem; text-align: right; }
 .hero-signal strong { color: var(--text); font-size: 1rem; }
 .work-section, .about-section, .contact-section { border-top: 1px solid var(--line); padding: 5rem 0; }
-.section-heading, .about-section, .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.section-heading { display: block; }
+.about-section, .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
 .section-note, .about-copy, .contact-copy { max-width: 30rem; color: var(--muted); }
 .filter-row { display: flex; align-items: center; flex-wrap: wrap; gap: .55rem; margin: 2.2rem 0 1.25rem; }
 .filter-button.is-active { background: var(--text); color: var(--bg); border-color: var(--text); }
@@ -83,7 +84,7 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; l
 .project-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; background: linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border: 1px solid var(--line); border-radius: 1.1rem; }
 .project-card:hover { border-color: rgba(255, 184, 107, .55); transform: translateY(-2px); transition: transform .24s ease, border-color .24s ease; }
 .project-card[hidden] { display: none; }
-.project-visual { position: relative; container-type: inline-size; aspect-ratio: 4 / 3; overflow: hidden; background: #172029; }
+.project-visual { position: relative; container-type: inline-size; aspect-ratio: 3 / 2; overflow: hidden; background: #172029; }
 .project-visual.is-expanded { position: fixed; z-index: 50; inset: 1rem; width: auto; height: auto; aspect-ratio: auto; border: 1px solid var(--line); box-shadow: 0 1rem 4rem rgba(0,0,0,.55); }
 .project-visual.is-expanded .project-video { height: 100%; }
 .project-visual.is-expanded .video-controls,
@@ -128,6 +129,8 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; l
 .profile-facts dt { color: var(--muted); font-size: .76rem; }
 .profile-facts dd { margin: .2rem 0 0; color: var(--text); font-weight: 650; }
 .contact-links { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 1.4rem; }
+.contact-item { display: inline-flex; align-items: baseline; gap: .35rem; }
+.contact-label { color: var(--muted); }
 .contact-links a { color: var(--accent); text-underline-offset: .25rem; }
 .site-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1.6rem 0 2rem; color: var(--muted); font-size: .78rem; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -151,7 +154,7 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; l
   .hero-signal { min-height: 13rem; }
   .orbit-one { width: 13rem; height: 6.5rem; }
   .orbit-two { width: 9rem; height: 12rem; }
-  .section-heading, .about-section, .contact-section { grid-template-columns: 1fr; gap: 1rem; }
+  .about-section, .contact-section { grid-template-columns: 1fr; gap: 1rem; }
   .work-section, .about-section, .contact-section { padding: 3.5rem 0; }
   .project-grid { grid-template-columns: 1fr; }
   .exhibition-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }

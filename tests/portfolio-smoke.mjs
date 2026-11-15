@@ -45,6 +45,7 @@ test("catalog uses specific discipline categories", () => {
 test("project cards use equal presentation", () => {
   assert.doesNotMatch(app, /精选项目|补充项目|Featured|Additional/);
   assert.match(app, /meta\.innerHTML = `\<span>\$\{project\.year\}/);
+  assert.doesNotMatch(html + app, /按 Unity 作品、工程、交互装置和建模动画方向浏览/);
 });
 
 test("media previews stay inside the repository", () => {
@@ -93,6 +94,8 @@ test("contact section only exposes profile links", () => {
   assert.doesNotMatch(html + app, /欢迎交流|Open to Unity internships|加拿大计算机硕士申请/);
   assert.match(html, /github\.com\/wang-qingfeng-dev/);
   assert.match(html, /id=["']contactEmail["']/);
+  assert.match(html, /联系邮箱：/);
+  assert.match(html, /GitHub：/);
 });
 
 test("video playback preserves audio and has a standard-source fallback", () => {
@@ -107,6 +110,8 @@ test("video playback preserves audio and has a standard-source fallback", () => 
   assert.match(app, /offsetX/);
   assert.match(app, /progress\.addEventListener\("change"/);
   assert.match(app, /progress\.addEventListener\("click"/);
+  assert.match(app, /pauseOtherVideos/);
+  assert.match(app, /other\.pause\(\)/);
   assert.match(app, /function adjustVolume/);
   assert.match(app, /ArrowUp/);
   assert.match(app, /deltaY/);
@@ -119,9 +124,14 @@ test("video playback preserves audio and has a standard-source fallback", () => 
 });
 
 test("video frames stay responsive and preserve the source aspect", () => {
-  assert.match(styles, /\.project-visual\s*\{[^}]*aspect-ratio:\s*4\s*\/\s*3/s);
+  assert.match(styles, /\.project-visual\s*\{[^}]*aspect-ratio:\s*3\s*\/\s*2/s);
   assert.match(styles, /\.project-video\s*\{[^}]*object-fit:\s*contain/s);
   assert.match(styles, /@media\s*\(max-width:\s*900px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
   assert.match(styles, /@media\s*\(min-width:\s*1100px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3/s);
   assert.match(styles, /@container\s*\(max-width:\s*28rem\)[\s\S]*\.video-volume[^{]*\{[^}]*display:\s*none/s);
+});
+
+test("project years reflect the supplied portfolio timeline", () => {
+  assert.equal(projects.find((project) => project.id === "science-museum")?.year, "2024");
+  assert.equal(projects.find((project) => project.id === "blender-keycap")?.year, "2024");
 });
