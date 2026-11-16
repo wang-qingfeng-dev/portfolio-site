@@ -214,12 +214,13 @@ test("video frames stay responsive and preserve the source aspect", () => {
   assert.match(styles, /\.video-quality option[^\{]*\{[^\}]*background:\s*var\(--surface-raised\)/s);
 });
 
-test("iOS video expansion uses an isolated, scroll-safe path", () => {
+test("iOS video expansion prefers the native Safari player", () => {
   assert.match(app, /setAttribute\("playsinline"/);
   assert.match(app, /setAttribute\("webkit-playsinline"/);
-  assert.doesNotMatch(app, /webkitEnterFullscreen/);
+  assert.match(app, /active\.webkitEnterFullscreen\(\)/);
   assert.match(app, /isIOSDevice\(\)/);
-  assert.match(app, /isIOSDevice\(\)[\s\S]{0,260}enterExpandedVideo\(target\)/);
+  assert.match(app, /isIOSDevice\(\) && typeof active\.webkitEnterFullscreen === "function"/);
+  assert.match(app, /isIOSDevice\(\)[\s\S]{0,220}enterExpandedVideo\(target\)/);
   assert.match(app, /video-modal-open/);
   assert.match(app, /scrollY/);
   assert.match(styles, /body\.video-modal-open/);
@@ -230,8 +231,13 @@ test("iOS video expansion uses an isolated, scroll-safe path", () => {
 test("iOS cards recover their poster and decoder after Safari suspends media", () => {
   assert.match(app, /video-poster/);
   assert.match(app, /IntersectionObserver/);
+  assert.match(app, /__safariWasOutOfView/);
+  assert.match(app, /recoverSuspendedVideo\(video, true\)/);
+  assert.match(app, /project-video:not\(\.project-video-buffer\)/);
   assert.match(app, /visibilitychange/);
   assert.match(app, /pageshow/);
+  assert.match(app, /ensureMediaLoaded\(\);[\s\S]{0,120}active\.webkitEnterFullscreen\(\)/);
+  assert.match(app, /nativeFullscreenWatchdog/);
 });
 
 test("page chrome uses the portfolio identity", () => {
@@ -253,6 +259,7 @@ test("quality changes prepare a second video before switching", () => {
   assert.match(app, /pendingQualityBuffer/);
   assert.match(app, /buffer\.remove\(\)/);
   assert.match(app, /if \(token !== video\.__qualityLoadToken \|\| !buffer\.isConnected\)/);
+  assert.match(app, /document\.body\.appendChild\(target\)/);
 });
 
 test("project years reflect the supplied portfolio timeline", () => {

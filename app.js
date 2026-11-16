@@ -307,13 +307,17 @@
     video.volume = 1;
   }
   function activeMediaFor(video) { return video.__activeVideo || video; }
-  function recoverSuspendedVideo(video) {
+  function recoverSuspendedVideo(video, force = false) {
     const active = activeMediaFor(video);
     if (!active || !active.isConnected || !active.src) return;
     const hasStarted = video.__mediaLoadStarted || video.__hasPlayed || active.currentTime > 0;
     if (!hasStarted || video.__recoveringSafariVideo) return;
     const hasDecodedFrame = active.readyState >= 2 && active.videoWidth > 0 && active.videoHeight > 0;
-    if (hasDecodedFrame && !active.error) return;
+    // Safari can retain readyState/video dimensions after it has discarded the
+    // composited frame. Forced recovery is used after native fullscreen,
+    // page resume, or an off-screen -> on-screen transition to rebuild that
+    // layer even when the media timeline still looks healthy.
+    if (!force && hasDecodedFrame && !active.error) return;
     const savedTime = Number.isFinite(active.currentTime) ? active.currentTime : 0;
     const wasPlaying = !active.paused;
     const source = active.currentSrc || active.src;
@@ -348,8 +352,11 @@
     active.src = source;
     active.load();
   }
-  function recoverVisibleVideos() {
-    document.querySelectorAll(".project-video").forEach((video) => recoverSuspendedVideo(video));
+  function recoverVisibleVideos(force = false) {
+    // Quality buffers are owned by their wrapper. Recovering both the wrapper
+    // and its hidden buffer would race two src/load() calls on the same media
+    // element in Safari.
+    document.querySelectorAll(".project-video:not(.project-video-buffer)").forEach((video) => recoverSuspendedVideo(video, force && isIOSDevice()));
   }
   function watchVideoForSafari(video) {
     if (!video || video.__safariWatched) return;
@@ -358,7 +365,13 @@
       if (!window.__portfolioVideoObserver) {
         window.__portfolioVideoObserver = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) recoverSuspendedVideo(entry.target);
+            if (entry.isIntersecting) {
+              const force = entry.target.__safariWasOutOfView === true;
+              entry.target.__safariWasOutOfView = false;
+              recoverSuspendedVideo(entry.target, force && isIOSDevice());
+            } else {
+              entry.target.__safariWasOutOfView = true;
+            }
           });
         }, { rootMargin: "240px 0px" });
       }
@@ -367,9 +380,9 @@
   }
   function installVideoRecoveryHooks() {
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) window.setTimeout(recoverVisibleVideos, 80);
+      if (!document.hidden) window.setTimeout(() => recoverVisibleVideos(true), 80);
     });
-    window.addEventListener("pageshow", () => window.setTimeout(recoverVisibleVideos, 80));
+    window.addEventListener("pageshow", () => window.setTimeout(() => recoverVisibleVideos(true), 80));
   }
   function isIOSDevice() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent)
@@ -414,13 +427,30 @@
     if (previous && previous !== target) {
       previous.classList.remove("is-expanded", "controls-visible");
       unlockPageForVideo(previous);
+      const previousPlaceholder = previous.__expandedPlaceholder;
+      if (previousPlaceholder && previousPlaceholder.parentNode) {
+        previousPlaceholder.parentNode.insertBefore(previous, previousPlaceholder.nextSibling);
+        previousPlaceholder.remove();
+      }
+      previous.__expandedPlaceholder = null;
+    }
+    if (!target.__expandedPlaceholder && target.parentNode) {
+      target.__expandedPlaceholder = document.createComment("portfolio-video-placeholder");
+      target.parentNode.insertBefore(target.__expandedPlaceholder, target);
     }
     lockPageForVideo(target);
+    if (target.parentNode !== document.body) document.body.appendChild(target);
     target.classList.add("is-expanded", "controls-visible");
   }
   function exitExpandedVideo(target) {
     target.classList.remove("is-expanded", "controls-visible");
     unlockPageForVideo(target);
+    const placeholder = target.__expandedPlaceholder;
+    if (placeholder && placeholder.parentNode) {
+      placeholder.parentNode.insertBefore(target, placeholder.nextSibling);
+      placeholder.remove();
+    }
+    target.__expandedPlaceholder = null;
   }
   function formatTime(seconds) {
     if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
@@ -498,6 +528,28 @@
       ["loadeddata", "playing"].forEach((eventName) => media.addEventListener(eventName, () => video.classList.remove("video-poster")));
       ["durationchange", "timeupdate", "play", "pause", "ended", "volumechange", "webkitbeginfullscreen", "webkitendfullscreen"]
         .forEach((eventName) => media.addEventListener(eventName, updateControls));
+      media.addEventListener("webkitbeginfullscreen", () => {
+        if (video.__nativeFullscreenWatchdog) {
+          window.clearTimeout(video.__nativeFullscreenWatchdog);
+          video.__nativeFullscreenWatchdog = null;
+        }
+        video.__nativeFullscreenPending = false;
+        // Native iOS fullscreen owns the video layer. If a previous fallback
+        // modal was left open, release its page lock before Safari takes over.
+        if (target.classList.contains("is-expanded")) exitExpandedVideo(target);
+        video.__nativeFullscreen = true;
+        updateControls();
+      });
+      media.addEventListener("webkitendfullscreen", () => {
+        if (video.__nativeFullscreenWatchdog) {
+          window.clearTimeout(video.__nativeFullscreenWatchdog);
+          video.__nativeFullscreenWatchdog = null;
+        }
+        video.__nativeFullscreenPending = false;
+        video.__nativeFullscreen = false;
+        window.setTimeout(() => recoverSuspendedVideo(video, true), 80);
+        updateControls();
+      });
     }
     video.__bindQualityBuffer = bindMedia;
     video.__qualitySwitchComplete = (active) => {
@@ -644,9 +696,28 @@
       } else if (target.classList.contains("is-expanded")) {
         exitExpandedVideo(target);
         updateControls();
+      } else if (isIOSDevice() && typeof active.webkitEnterFullscreen === "function") {
+        // Use Safari's native player on iPhone/iPad. Keeping the video in its
+        // native fullscreen layer avoids the blank compositing state caused by
+        // fixed-position page overlays during scroll and pinch zoom.
+        try {
+          ensureMediaLoaded();
+          video.__nativeFullscreenPending = true;
+          active.webkitEnterFullscreen();
+          video.__nativeFullscreenWatchdog = window.setTimeout(() => {
+            if (!video.__nativeFullscreenPending || video.__nativeFullscreen) return;
+            video.__nativeFullscreenPending = false;
+            enterExpandedVideo(target);
+            showTransientControls();
+            updateControls();
+          }, 900);
+        } catch (_) {
+          video.__nativeFullscreenPending = false;
+          enterExpandedVideo(target);
+          showTransientControls();
+          updateControls();
+        }
       } else if (isIOSDevice()) {
-        // iOS Safari's native webkit fullscreen detaches the video layer from
-        // the page. Keep the player in our fixed, scroll-locked modal instead.
         enterExpandedVideo(target);
         showTransientControls();
         updateControls();
