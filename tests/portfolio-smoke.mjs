@@ -210,6 +210,7 @@ test("video frames stay responsive and preserve the source aspect", () => {
   assert.match(styles, /@media\s*\(max-width:\s*900px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
   assert.match(styles, /@media\s*\(min-width:\s*1100px\)[\s\S]*\.project-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3/s);
   assert.match(styles, /\.video-volume-control:hover \.video-volume/);
+  assert.match(styles, /\.video-volume-control::before[^\{]*\{[^\}]*height:\s*\.8rem/s);
   assert.match(styles, /\.video-volume[^\{]*\{[^\}]*writing-mode:\s*vertical-lr/s);
   assert.match(styles, /\.video-quality option[^\{]*\{[^\}]*background:\s*var\(--surface-raised\)/s);
 });
@@ -244,7 +245,9 @@ test("page chrome uses the portfolio identity", () => {
   assert.match(html, /<title>王青锋 · 交互系统作品集<\/title>/);
   assert.match(html, /assets\/favicon\.svg/);
   assert.match(app, /pageTitle/);
-  assert.match(html, /class="signal-core">QW<\/span>/);
+  assert.match(html, /class="brand-mark">QF<\/span>/);
+  assert.match(html, /class="signal-core">X<\/span>/);
+  assert.doesNotMatch(html, /class="signal-core">QW<\/span>/);
   assert.doesNotMatch(html, /class="signal-core">01<\/span>/);
 });
 
