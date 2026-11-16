@@ -266,7 +266,7 @@ test("quality changes prepare a second video before switching", () => {
 });
 
 test("project years reflect the supplied portfolio timeline", () => {
-  assert.equal(projects.find((project) => project.id === "science-museum")?.year, "2024");
+  assert.equal(projects.find((project) => project.id === "science-museum")?.year, "2025");
   assert.equal(projects.find((project) => project.id === "blender-keycap")?.year, "2024");
 });
 

@@ -29,7 +29,7 @@ window.PORTFOLIO_PROJECTS = [
     id: "science-museum",
     featured: true,
     category: "unity",
-    year: "2024",
+    year: "2025",
     title: { zh: "科技馆展览互动体验", en: "Science Museum Interactive Exhibition" },
     summary: { zh: "为科技馆展览制作的 Unity 互动体验，包含未来城市科技馆场景和现场展示流程。", en: "A Unity interactive experience for a science-museum exhibition, with a future-city museum scene and an exhibition-ready flow." },
     description: { zh: "一个面向科技馆展示的 Unity 互动体验，构建未来城市科技博物馆场景。观众可以在现场演示版本中探索空间、触发交互并查看展览内容。", en: "A Unity interactive experience for a science-museum exhibition, set in a future-city technology museum. Visitors can explore the space, trigger interactions, and browse exhibition content in the demonstration build." },
